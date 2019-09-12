@@ -1,3 +1,6 @@
-*/1 * * * * echo $(date '+\%Y-\%m-\%d \%H:\%M:\%S') hello crontab >>/var/log/cron.log
-*/1 * * * * /usr/bin/python3.6 /daily_work/test.py >>/var/log/cron.log
+*/10 * * * * bash /workspace/job_run.sh >>/var/log/cron.log
 # An empty line is required at the end of this file for a valid cron file.
+# To define the time you can provide concrete values for
+# minute (m), hour (h), day of month (dom), month (mon),
+# and day of week (dow) or use '*' in these fields (for 'any').
+#*/1 * * * * echo $(date '+\%Y-\%m-\%d \%H:\%M:\%S') hello crontab >>/var/log/cron.log
