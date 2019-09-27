@@ -1,0 +1,2 @@
+*/1 * * * * bash /code/cron_t.sh >> /var/log/cron.log
+# An empty line is required at the end of this file for a valid cron file.
