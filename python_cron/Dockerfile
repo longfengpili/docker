@@ -10,6 +10,12 @@ ENV LANG zh_CN.UTF-8
 ENV LANGUAGE zh_CN.UTF-8
 ENV LC_ALL zh_CN.UTF-8
 
+# 设置环境
+ENV TZ=Asia/Shanghai
+
+#change timezone
+RUN export DEBIAN_FRONTEND=noninteractive && apt-get install tzdata && echo "Asia/Shanghai" > /etc/timezone && ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && dpkg-reconfigure --frontend noninteractive tzdata
+
 # Add crontab file in the cron directory
 ADD crontab /etc/cron.d/crontab
 
@@ -30,9 +36,6 @@ COPY requirements.txt ./requirements.txt
 
 #Pip
 RUN pip3 install -r requirements.txt
-
-#change timezone
-RUN apt-get install tzdata && ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo "Asia/Shanghai" > /etc/timezone && dpkg-reconfigure --frontend noninteractive tzdata
 
 # Run the command on container startup
 CMD cron && tail -f /var/log/cron.log
