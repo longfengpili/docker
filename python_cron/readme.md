@@ -1,6 +1,6 @@
 # volume
  ```docker
-docker run -e TZ="Asia/Shanghai" --name mycron_v1 -v e:/GoogleDrive/work_daily/github/docker/python_cron/code:/workspace/job/ mycron_py:v1
+docker run --name python_cron -v E:\GoogleDrive\work_daily\github\docker\python_cron\crontabfile:/etc/cron.d/ -v E:\GoogleDrive\work_daily\daily_work:/workspac e/ python_cron:v3
  ```
 # TZ
 >  # 创建并运行容器，通过 -e TZ="Asia/Shanghai" 设置时区
@@ -10,11 +10,11 @@ docker run -e TZ="Asia/Shanghai" --name mycron_v1 -v e:/GoogleDrive/work_daily/g
 
 # volume
 ```
-docker run -it -v e:\googledrive\work_daily\github\docker\crontab_t\hello-cron:/etc/cron.d/hello-cron -v E:\GoogleDrive\work_daily\github\docker\crontab_t\code\:/code/ --na me cron_t cron_t:latest bash
+docker run -it -v e:\googledrive\work_daily\github\docker\crontab_t:/etc/cron.d/ -v E:\GoogleDrive\work_daily\github\docker\crontab_t\code:/code/ --name cron_t cron_t:latest bash
 ```
 
-# cron
-> 第一次使用exec进入需要重启cron    
+#crontab
++ crontab 文件修改需要重新加载
 ```
-/etc/init.d/cron restart
+crontab /etc/cron.d/hello-cron
 ```
