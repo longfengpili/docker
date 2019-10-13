@@ -1,7 +1,7 @@
 <!--
  * @Author: longfengpili
  * @Date: 2019-10-13 10:33:02
- * @LastEditTime: 2019-10-13 10:34:28
+ * @LastEditTime: 2019-10-13 10:47:06
  * @github: https://github.com/longfengpili
  -->
  
@@ -16,7 +16,7 @@ docker run --name python_cron -v E:\GoogleDrive\work_daily\github\docker\python_
      ```
 
 # crontab
-+ crontab 文件修改需要重新加载
+> crontab 文件修改需要重新加载
 ```
 crontab /etc/cron.d/hello-cron
 ```
