@@ -1,5 +1,7 @@
-*/1 * * * * bash /workspace/job_run.sh >>/var/log/cron.log
-*/1 * * * * bash /workspace/bakeup_run.sh >>/var/log/cron.log
+#10 11 * * * bash /workspace/job_run.sh >>/var/log/cron.log
+#10 19 * * * bash /workspace/job_run.sh >>/var/log/cron.log
+#10 3 * * * bash /workspace/job_run.sh >>/var/log/cron.log
+#1 0 * * * bash /workspace/bakeup_run.sh >>/var/log/cron.log
 # An empty line is required at the end of this file for a valid cron file.
 # To define the time you can provide concrete values for
 # minute (m), hour (h), day of month (dom), month (mon),
