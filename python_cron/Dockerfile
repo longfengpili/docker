@@ -2,7 +2,7 @@ FROM ubuntu:latest
 MAINTAINER chunyang
 
 #language-pack-zh-hans support zh
-RUN apt-get update -y && apt-get -y install cron && apt-get -y install python3.6 python3-pip && apt-get -y install language-pack-zh-hans
+RUN apt-get update -y && apt-get -y install cron python3.6 python3-pip language-pack-zh-hans git
 
 #增加中文编码
 RUN locale-gen zh_CN.UTF-8  
