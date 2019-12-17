@@ -6,6 +6,7 @@ docker run -u root --name myjenkins -p 8080:8080 -v e:/jenkins/jenkins_home:/var
 ```
 
 # environment
+1. 设置令牌环境变量
 ```
 pipeline {
     agent any
@@ -16,6 +17,34 @@ pipeline {
         stage('Example') {
             environment { 
                 AN_ACCESS_KEY = credentials('my-prefined-secret-text') 
+            }
+            steps {
+                sh 'printenv'
+            }
+        }
+    }
+}
+```
+2. 设置动态环境变脸
+```
+pipeline {
+    agent any 
+    environment {
+        // 使用 returnStdout
+        CC = """${sh(
+                returnStdout: true,
+                script: 'echo $(date \'+%Y-%m-%d\')'
+            )}""" 
+        // 使用 returnStatus
+        EXIT_STATUS = """${sh(
+                returnStatus: true,
+                script: 'exit 1'
+            )}"""
+    }
+    stages {
+        stage('Example') {
+            environment {
+                DEBUG_FLAGS = '-g'
             }
             steps {
                 sh 'printenv'
@@ -71,7 +100,7 @@ pipeline {
 # 插件
 ## Email Extension Template Plugin
 + 设置email  
-[email_content](./email.html)
+[email.html](./email.html)
 + Jenkinsfile 设定
 ```
 post {
