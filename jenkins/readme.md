@@ -34,7 +34,7 @@ pipeline {
         CC = """${sh(
                 returnStdout: true,
                 script: 'echo $(date \'+%Y-%m-%d\')'
-            )}""" 
+            )}""".trim()
         // 使用 returnStatus
         EXIT_STATUS = """${sh(
                 returnStatus: true,
@@ -64,6 +64,7 @@ pipeline {
         booleanParam(name: 'TOGGLE', defaultValue: true, description: 'Toggle this value')
         choice(name: 'CHOICE', choices: ['One', 'Two', 'Three'], description: 'Pick something')
         password(name: 'PASSWORD', defaultValue: 'SECRET', description: 'Enter a password')
+        file(name: 'key1', description: 'Choose a file to upload')
     }
     stages {
         stage('Example') {
@@ -122,5 +123,16 @@ post {
 environment {
     version = VersionNumber(projectStartDate: '', versionNumberString: '${BUILD_DATE_FORMATTED, "yyyy-MM-dd"}.${BUILDS_TODAY}', versionPrefix: "${JOB_NAME}_", worstResultForIncrement: 'SUCCESS')
    }
+}
+```
+
+## Build Timestamp
+1. 系统管理→系统配置→Build Timestamp
+2. jenkinsfile 调用
+```
+parameters {
+    string(name: 'DATEMIN', 
+        defaultValue: "${TODAY}", 
+        description: 'modified timestamp')
 }
 ```
