@@ -71,7 +71,7 @@ pipeline {
 # 插件
 ## Email Extension Template Plugin
 + 设置email  
-[email_content](./email_concent.html)
+[email_content](./email.html)
 + Jenkinsfile 设定
 ```
 post {
