@@ -152,58 +152,73 @@ pipeline {
 ## Email Extension Template Plugin
 + 设置email  
 [email.html](./email.html)
-    + ${FILE,path="PATH"} 包括指定文件（路径）的含量相对于工作空间根目录。path文件路径，注意：是工作区目录的相对路径。
-    + ${BUILD_NUMBER} 显示当前构建的编号。
-    + ${JOB_DESCRIPTION} 显示项目描述。
-    + ${SVN_REVISION} 显示svn版本号。还支持Subversion插件出口的SVN_REVISION_n版本。
-    + ${CAUSE} 显示谁、通过什么渠道触发这次构建。
-    + ${CHANGES} -显示上一次构建之后的变化。
-        + showPaths 如果为 true,显示提交修改后的地址。默认false。
-        + showDependencies 如果为true，显示项目构建依赖。默认为false
-        + format 遍历提交信息，一个包含%X的字符串，其中%a表示作者，%d表示日期，%m表示消息，%p表示路径，%r表示版本。注意，并不是所有的版本系统都支持%d和%r。如果指定showPaths将被忽略。默认“[%a] %m\\n”。
-        + pathFormat 一个包含“%p”的字符串，用来标示怎么打印路径。
-    + ${BUILD_ID}显示当前构建生成的ID。
-    + ${PROJECT_NAME} 显示项目的全名。
-    + ${PROJECT_DISPLAY_NAME} 显示项目的显示名称。
-    + ${SCRIPT} 从一个脚本生成自定义消息内容。自定义脚本应该放在"$JENKINS_HOME/email-templates"。当使用自定义脚本时会默认搜索$JENKINS_HOME/email-templatesdirectory目录。其他的目录将不会被搜索。
-        + script 当其使用的时候，仅仅只有最后一个值会被脚本使用（不能同时使用script和template）。
-        + template常规的simpletemplateengine格式模板。
-    + ${JENKINS_URL} 显示Jenkins服务器的url地址（你可以再系统配置页更改）。
-    + ${BUILD_LOG_MULTILINE_REGEX}按正则表达式匹配并显示构建日志。
-        + regex java.util.regex.Pattern 生成正则表达式匹配的构建日志。无默认值，可为空。
-        + maxMatches 匹配的最大数量。如果为0，将匹配所有。默认为0。
-        + showTruncatedLines 如果为true，包含[...truncated ### lines...]行。默认为true。
-        + substText 如果非空，就把这部分文字（而不是整行）插入该邮件。默认为空。
-        + escapeHtml 如果为true，格式化HTML。默认为false。
-        + matchedSegmentHtmlStyle 如果非空，输出HTML。匹配的行数将变为<b style=”your-style-value”> html escaped matched line </b>格式。默认为空。
-    + ${BUILD_LOG} 显示最终构建日志。
-        + maxLines 日志最多显示的行数，默认250行。
-        + escapeHtml 如果为true，格式化HTML。默认false。
-    + ${PROJECT_URL} 显示项目的URL地址。
-    + ${BUILD_STATUS} -显示当前构建的状态(失败、成功等等)
-    + ${BUILD_URL} -显示当前构建的URL地址。
-    + ${CHANGES_SINCE_LAST_SUCCESS} -显示上一次成功构建之后的变化。
-        + reverse在顶部标示新近的构建。默认false。
-        + format遍历构建信息，一个包含%X的字符串，其中%c为所有的改变，%n为构建编号。默认”Changes for Build #%n\n%c\n”。
-        + showPaths,changesFormat,pathFormat分别定义如${CHANGES}的showPaths、format和pathFormat参数。
-    + ${CHANGES_SINCE_LAST_UNSTABLE} -显示显示上一次不稳固或者成功的构建之后的变化。
-        + reverse在顶部标示新近的构建。默认false。
-        + format遍历构建信息，一个包含%X的字符串，其中%c为所有的改变，%n为构建编号。默认”Changes for Build #%n\n%c\n”。
-        + showPaths,changesFormat,pathFormat分别定义如${CHANGES}的showPaths、format和pathFormat参数。
-    + ${ENV} –显示一个环境变量。
-        var– 显示该环境变量的名称。如果为空，显示所有，默认为空。
-    + ${FAILED_TESTS} -如果有失败的测试，显示这些失败的单元测试信息。
-    + ${JENKINS_URL} -显示Jenkins服务器的地址。(你能在“系统配置”页改变它)。
-    + ${HUDSON_URL} -不推荐，请使用$JENKINS_URL
-    + ${PROJECT_URL} -显示项目的URL。
-    + ${SVN_REVISION} -显示SVN的版本号。
-    + ${JELLY_SCRIPT} -从一个Jelly脚本模板中自定义消息内容。有两种模板可供配置：HTML和TEXT。你可以在$JENKINS_HOME/email-templates下自定义替换它。当使用自动义模板时，”template”参数的名称不包含“.jelly”。
-        + template模板名称，默认”html”。
-    + ${TEST_COUNTS} -显示测试的数量。
-        + var– 默认“total”。
-            + total -所有测试的数量。
-            + fail -失败测试的数量。
-            + skip -跳过测试的数量。
+    * ${FAILED_TESTS}  #如果任何测试失败，则显示失败的单元测试信息。
+        * showStack   #在失败的测试输出中显示堆栈跟踪。默认为true。
+        * showMessage  #在测试输出失败时显示错误消息。默认为true。
+        * maxTests    #最多显示这么多测试。默认情况下不设置限制。
+        * onlyRegressions  #仅显示与先前构建不同的失败测试。默认为false。
+    * ${TEST_COUNTS,var="TYPE"}   #根据传入的类型（var）显示测试数（总计，通过，失败，跳过）。默认为总计。
+    * ${GIT_BRANCH}   #扩展为已构建的分支的名称。
+        * Parameters
+            * all   #如果指定，则列出指向给定提交的所有分支。默认情况下，令牌会扩展为其中一个。
+            * fullName  #如果指定，则此标记将扩展为完整的分支名称，例如“origin / master”。否则，它只会扩展为短名称，例如“master”。
+    * ${GIT_REVISION}  #扩展为指向已构建的提交的Git SHA1提交ID。
+        * Parameters
+            * length=N (optional, default to 40)  #指定提交ID长度。完整的SHA1提交ID长度为40个字符，但通常会将其剪切为8或12，因为它通常提供足够的唯一性并且更加清晰。
+    * ${ADMIN_EMAIL}   #显示Jenkins管理员的电子邮件地址
+    * ${BUILD_CAUSE} + ${CAUSE}  #显示构建的原因。
+    * ${BUILD_LOG_EXCERPT}   #显示构建日志的摘录。
+        * start  #正则表达式匹配摘录起始行（排除匹配行）。
+        * end   #正则表达式匹配摘录结束行（排除匹配行）。
+    * ${BUILD_LOG}      #显示构建日志结尾。
+        * maxLines   #最多显示这么多行的日志。默认为250。
+        * escapeHtml  #如果为true，则HTML将被转义。默认为false。
+    * ${BUILD_LOG_MULTILINE_REGEX}       #显示与正则表达式匹配的构建日志段。
+        * regex   #java.util.regex.Pattern包含与此正则表达式匹配的构建日志的段。另请参见null。没有默认值。必需参数
+        * maxMatches  #要包含的最大匹配数。如果为0，则将包括所有匹配。默认为0。
+        * showTruncatedLines  #如果为true，则包括[...截断的### lines ...]行。默认为true。
+        * substText   #如果为非null，请将此文本插入电子邮件而不是整个段。默认为null。
+        * escapeHtml  #如果为true，则转义HTML。默认为false。
+        * matchedSegmentHtmlStyle  #如果为非null，则输出HTML。匹配的行将变为<b style =“your-style-value”> html转义匹配行</ b>。默认为null。
+    * ${BUILD_LOG_REGEX}        #显示构建日志中与正则表达式匹配的行。
+        * regex   #包含与此正则表达式匹配的行。另请参见java.util.regex.Pattern.Defaults to“（？i）\\ b（error | exception | fatal | fail（ed | ure）| un（defined | resolved））\\ b”
+        * linesBefore  #匹配行之前要包含的行数。与另一个匹配或linesAfter重叠的行仅包含一次。默认为0。
+        * linesAfter  #匹配行后要包含的行数。与另一个匹配或linesBefore重叠的行只包含一次。默认为0。
+        * maxMatches   #要包含的最大匹配数。如果为0，则将包括所有匹配。默认为0。
+        * showTruncatedLines   #如果为true，则包括[...截断的### lines ...]行。默认为true。
+        * substText   #如果为非null，请将此文本插入电子邮件而不是整行。默认为null。
+        * escapeHtml   #如果为true，则转义HTML。违约是假的。
+        * matchedLineHtmlStyle   #如果为非null，则输出HTML。匹配的行将变为<b style =“your-style-value”> html转义匹配行</ b>。默认为null。
+        * addNewline    #如果为true，则在subsText之后添加换行符。默认为true。
+        * defaultValue   #如果没有替换任何内容，将使用此值。
+    * ${BUILD_NUMBER}        #扩展为当前内部版本号，这是一个标识构建的顺序自动递增唯一编号，例如“125”
+    * ${BUILD_STATUS}   #显示当前构建的状态。（failing, success等......）
+    * ${BUILD_URL}   #显示当前构建的URL
+    * ${CHANGES_SINCE_LAST_BUILD} + ${CHANGES}   #显示自上次构建以来的更改。并非所有修订系统都支持％d和％r。如果指定showPaths参数被忽略。默认为“[％a]％m \\ n”
+        * showDependencies   #如果为true，则显示此构建所依赖的项目的更改。默认为false
+        * showPaths   #如果为true，则显示由提交修改的路径。默认为false
+        * format    #对于列出的每个提交，包含％X的字符串，其中％x是以下之一：%a（作者）、%d(日期）、%m(信息)、%p(路径)、%r(版本)
+        * pathFormat      #包含％p的字符串，指示如何打印路径。Defaults to "\\t%p\\n"
+        * regex   #正则表达式。
+        * replace  #替换与给定正则表达式匹配的更改消息的所有子字符串。
+        * default  #未检测到更改时使用的消息。默认为“无更改\ n”
+    * ${CHANGES_SINCE_LAST_SUCCESS}       #显示自上次成功构建以来的更改。默认为#%n\n%c\n
+        * reverse  #如果为true，则将最新版本显示在顶部而不是底部。默认为false。
+        * format   #对于列出的每个构建，包含％X的字符串，其中％X是其中之一
+            * %c       #变化
+            * %n       #编号
+        * changesFormat     #对于构建中的每个更改。
+    * ${CHANGES_SINCE_LAST_UNSTABLE}   #扩展到自上次不稳定或成功构建以来的更改。参数跟上面一样
+    * ${ENV,var="VARIABLENAME"}   #从构建环境扩展到环境变量（此处指定为VARIABLENAME）。请注意，这不包括构建脚本本身设置的任何变量，只包括由Jenkins和其他插件设置的变量。
+    * ${JENKINS_URL}   #显示Jenkins服务器的URL。 （您可以在系统配置页面上更改此设置。）
+    * ${JOB_DESCRIPTION}  #显示作业的说明。
+    * ${LOG_REGEX}   #使用正则表达式查找单个日志条目，并使用其中的捕获组生成新输出。这部分基于description-setter插件（https://github.com/jenkinsci/description-setter-plugin）。
+    * ${PROJECT_NAME}  #显示项目的全名。 （参见AbstractProject.getFullDisplayName）
+    * ${PROJECT_DISPLAY_NAME}  #显示项目的显示名称。 （参见AbstractProject.getDisplayName）
+    * ${PROJECT_URL}   #显示项目页面的URL。
+    * ${PROPFILE,file="FILENAME",property="PROPERTYNAME"}   #扩展为属性文件中的属性值。文件名相对于构建工作区根目录。
+    * ${FILE,path="PATH"}   #扩展为文件的内容。文件路径相对于构建工作空间根目录。
+    * ${XML,file="FILE",xpath="XPATH"}  #扩展到针对给定XML文件运行的XPath表达式的结果。如果XPath求值为多个值，则返回以分号分隔的字符串。文件路径相对于构建工作空间根目录。
 
 + Jenkinsfile 设定
 ```
