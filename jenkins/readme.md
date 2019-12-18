@@ -152,13 +152,67 @@ pipeline {
 ## Email Extension Template Plugin
 + 设置email  
 [email.html](./email.html)
+    + ${FILE,path="PATH"} 包括指定文件（路径）的含量相对于工作空间根目录。path文件路径，注意：是工作区目录的相对路径。
+    + ${BUILD_NUMBER} 显示当前构建的编号。
+    + ${JOB_DESCRIPTION} 显示项目描述。
+    + ${SVN_REVISION} 显示svn版本号。还支持Subversion插件出口的SVN_REVISION_n版本。
+    + ${CAUSE} 显示谁、通过什么渠道触发这次构建。
+    + ${CHANGES} -显示上一次构建之后的变化。
+        + showPaths 如果为 true,显示提交修改后的地址。默认false。
+        + showDependencies 如果为true，显示项目构建依赖。默认为false
+        + format 遍历提交信息，一个包含%X的字符串，其中%a表示作者，%d表示日期，%m表示消息，%p表示路径，%r表示版本。注意，并不是所有的版本系统都支持%d和%r。如果指定showPaths将被忽略。默认“[%a] %m\\n”。
+        + pathFormat 一个包含“%p”的字符串，用来标示怎么打印路径。
+    + ${BUILD_ID}显示当前构建生成的ID。
+    + ${PROJECT_NAME} 显示项目的全名。
+    + ${PROJECT_DISPLAY_NAME} 显示项目的显示名称。
+    + ${SCRIPT} 从一个脚本生成自定义消息内容。自定义脚本应该放在"$JENKINS_HOME/email-templates"。当使用自定义脚本时会默认搜索$JENKINS_HOME/email-templatesdirectory目录。其他的目录将不会被搜索。
+        + script 当其使用的时候，仅仅只有最后一个值会被脚本使用（不能同时使用script和template）。
+        + template常规的simpletemplateengine格式模板。
+    + ${JENKINS_URL} 显示Jenkins服务器的url地址（你可以再系统配置页更改）。
+    + ${BUILD_LOG_MULTILINE_REGEX}按正则表达式匹配并显示构建日志。
+        + regex java.util.regex.Pattern 生成正则表达式匹配的构建日志。无默认值，可为空。
+        + maxMatches 匹配的最大数量。如果为0，将匹配所有。默认为0。
+        + showTruncatedLines 如果为true，包含[...truncated ### lines...]行。默认为true。
+        + substText 如果非空，就把这部分文字（而不是整行）插入该邮件。默认为空。
+        + escapeHtml 如果为true，格式化HTML。默认为false。
+        + matchedSegmentHtmlStyle 如果非空，输出HTML。匹配的行数将变为<b style=”your-style-value”> html escaped matched line </b>格式。默认为空。
+    + ${BUILD_LOG} 显示最终构建日志。
+        + maxLines 日志最多显示的行数，默认250行。
+        + escapeHtml 如果为true，格式化HTML。默认false。
+    + ${PROJECT_URL} 显示项目的URL地址。
+    + ${BUILD_STATUS} -显示当前构建的状态(失败、成功等等)
+    + ${BUILD_URL} -显示当前构建的URL地址。
+    + ${CHANGES_SINCE_LAST_SUCCESS} -显示上一次成功构建之后的变化。
+        + reverse在顶部标示新近的构建。默认false。
+        + format遍历构建信息，一个包含%X的字符串，其中%c为所有的改变，%n为构建编号。默认”Changes for Build #%n\n%c\n”。
+        + showPaths,changesFormat,pathFormat分别定义如${CHANGES}的showPaths、format和pathFormat参数。
+    + ${CHANGES_SINCE_LAST_UNSTABLE} -显示显示上一次不稳固或者成功的构建之后的变化。
+        + reverse在顶部标示新近的构建。默认false。
+        + format遍历构建信息，一个包含%X的字符串，其中%c为所有的改变，%n为构建编号。默认”Changes for Build #%n\n%c\n”。
+        + showPaths,changesFormat,pathFormat分别定义如${CHANGES}的showPaths、format和pathFormat参数。
+    + ${ENV} –显示一个环境变量。
+        var– 显示该环境变量的名称。如果为空，显示所有，默认为空。
+    + ${FAILED_TESTS} -如果有失败的测试，显示这些失败的单元测试信息。
+    + ${JENKINS_URL} -显示Jenkins服务器的地址。(你能在“系统配置”页改变它)。
+    + ${HUDSON_URL} -不推荐，请使用$JENKINS_URL
+    + ${PROJECT_URL} -显示项目的URL。
+    + ${SVN_REVISION} -显示SVN的版本号。
+    + ${JELLY_SCRIPT} -从一个Jelly脚本模板中自定义消息内容。有两种模板可供配置：HTML和TEXT。你可以在$JENKINS_HOME/email-templates下自定义替换它。当使用自动义模板时，”template”参数的名称不包含“.jelly”。
+        + template模板名称，默认”html”。
+    + ${TEST_COUNTS} -显示测试的数量。
+        + var– 默认“total”。
+            + total -所有测试的数量。
+            + fail -失败测试的数量。
+            + skip -跳过测试的数量。
+
 + Jenkinsfile 设定
 ```
 post {
     always {
             emailext(recipientProviders: [requestor()],
                     subject: '${PROJECT_NAME} - Build # ${BUILD_NUMBER} - ${BUILD_STATUS}!', 
-                    body: '${FILE,path="./email.html"}')
+                    body: '${FILE,path="./email.html"}'，
+                    attachLog: true)
     }
 }
 ```
@@ -167,6 +221,8 @@ post {
     * developers()  此次构建所涉及的所有提交者
     * requestor() 请求构建的人
 + attachmentsPattern 提交附件
++ attachLog 日志
++ compressLog 是否压缩日志
 
 ## Version Number
 ```
