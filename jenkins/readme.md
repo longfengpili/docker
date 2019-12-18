@@ -179,7 +179,7 @@ pipeline {
         * showTruncatedLines  #如果为true，则包括[...截断的### lines ...]行。默认为true。
         * substText   #如果为非null，请将此文本插入电子邮件而不是整个段。默认为null。
         * escapeHtml  #如果为true，则转义HTML。默认为false。
-        * matchedSegmentHtmlStyle  #如果为非null，则输出HTML。匹配的行将变为<b style =“your-style-value”> html转义匹配行</ b>。默认为null。
+        * matchedSegmentHtmlStyle  #如果为非null，则输出HTML。匹配的行将变为`<b style =“your-style-value”> `html转义匹配行</ b>。默认为null。
     * ${BUILD_LOG_REGEX}        #显示构建日志中与正则表达式匹配的行。
         * regex   #包含与此正则表达式匹配的行。另请参见java.util.regex.Pattern.Defaults to“（？i）\\ b（error | exception | fatal | fail（ed | ure）| un（defined | resolved））\\ b”
         * linesBefore  #匹配行之前要包含的行数。与另一个匹配或linesAfter重叠的行仅包含一次。默认为0。
@@ -188,7 +188,7 @@ pipeline {
         * showTruncatedLines   #如果为true，则包括[...截断的### lines ...]行。默认为true。
         * substText   #如果为非null，请将此文本插入电子邮件而不是整行。默认为null。
         * escapeHtml   #如果为true，则转义HTML。违约是假的。
-        * matchedLineHtmlStyle   #如果为非null，则输出HTML。匹配的行将变为<b style =“your-style-value”> html转义匹配行</ b>。默认为null。
+        * matchedLineHtmlStyle   #如果为非null，则输出HTML。匹配的行将变为`<b style =“your-style-value”> `html转义匹配行</ b>。默认为null。
         * addNewline    #如果为true，则在subsText之后添加换行符。默认为true。
         * defaultValue   #如果没有替换任何内容，将使用此值。
     * ${BUILD_NUMBER}        #扩展为当前内部版本号，这是一个标识构建的顺序自动递增唯一编号，例如“125”
