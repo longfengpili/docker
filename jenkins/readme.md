@@ -2,7 +2,7 @@
 
 # docker run
 ```docker
-docker run -u root --name myjenkins -p 8080:8080 -v e:/jenkins/jenkins_home:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock -v e:/jenkins/home:/home  jenkinsci/blueocean
+docker run -u root -e TZ="Asia/Shanghai" --name myjenkins -p 8080:8080 -v e:/jenkins/jenkins_home:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock -v E:/GoogleDrive/work_daily/daily_work:/home  jenkinsci/blueocean
 ```
 
 # environment
@@ -48,6 +48,56 @@ pipeline {
             }
             steps {
                 sh 'printenv'
+            }
+        }
+    }
+}
+```
+3. 设置环境变量
+```
+pipeline {
+    agent any
+
+    environment {
+        FOO = "bar"
+        NAME = "Joe"
+    }
+
+    stages {
+        stage("Env Variables") {
+            environment {
+                NAME = "Alan" // overrides pipeline level NAME env variable
+                BUILD_NUMBER = "2" // overrides the default BUILD_NUMBER
+            }
+
+            steps {
+                echo "FOO = ${env.FOO}" // prints "FOO = bar"
+                echo "NAME = ${env.NAME}" // prints "NAME = Alan"
+                echo "BUILD_NUMBER =  ${env.BUILD_NUMBER}" // prints "BUILD_NUMBER = 2"
+
+                script {
+                    env.SOMETHING = "1" // creates env.SOMETHING variable
+                }
+            }
+        }
+
+        stage("Override Variables") {
+            steps {
+                script {
+                    env.FOO = "IT DOES NOT WORK!" // it can't override env.FOO declared at the pipeline (or stage) level
+                    env.SOMETHING = "2" // it can override env variable created imperatively
+                }
+
+                echo "FOO = ${env.FOO}" // prints "FOO = bar"
+                echo "SOMETHING = ${env.SOMETHING}" // prints "SOMETHING = 2"
+
+                withEnv(["FOO=foobar"]) { // it can override any env variable
+                    echo "FOO = ${env.FOO}" // prints "FOO = foobar"
+                }
+
+                withEnv(["BUILD_NUMBER=1"]) {
+                    echo "BUILD_NUMBER = ${env.BUILD_NUMBER}" // prints "BUILD_NUMBER = 1"
+                }
             }
         }
     }
@@ -134,5 +184,27 @@ parameters {
     string(name: 'DATEMIN', 
         defaultValue: "${TODAY}", 
         description: 'modified timestamp')
+}
+```
+
+## user build vars
+|变量|说明|
+|:-:|:-:|
+|BUILD_USER|Full name (first name + last name)|
+|BUILD_USER_EMAIL|Email address|
+|BUILD_USER_FIRST_NAME|First name|
+|BUILD_USER_ID|Jenkins user ID|
+|BUILD_USER_LAST_NAME|Last name|
+```
+stage('build user info') {
+    steps {
+        wrap([$class: 'BuildUser']) {
+            script {
+                BUILD_USER_ID = "${BUILD_USER_ID}"
+                BUILD_USER = "${BUILD_USER}"
+            }
+        }
+        echo "${BUILD_USER}"
+    }
 }
 ```
