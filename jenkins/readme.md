@@ -2,7 +2,7 @@
 
 # docker run
 ```docker
-docker run -u root -e TZ="Asia/Shanghai" --name myjenkins -p 8080:8080 -v e:/jenkins/jenkins_home:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock -v E:/GoogleDrive/work_daily/daily_work:/home  jenkinsci/blueocean
+docker run -u root -e TZ="Asia/Shanghai" --name myjenkins -p 8080:8080 -p 50000:50000 -v e:/jenkins/jenkins_home:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock -v E:/GoogleDrive/work_daily/daily_work:/home  jenkinsci/blueocean
 ```
 
 # environment
@@ -145,13 +145,37 @@ pipeline {
 |/**/example|匹配(Matches) /app/example, /app/foo/example, 和 /example|
 |/app/**/dir/file.*|匹配(Matches) /app/dir/file.jsp, /app/foo/dir/file.html,/app/foo/bar/dir/file.pdf和 /app/dir/file.java|
 |/**/*.jsp|匹配(Matches)任何的.jsp 文件|
-> 最长匹配原则(has more characters),URL请求/app/dir/file.jsp，现在存在两个路径匹配模式/**/*.jsp和/app/dir/*.jsp，那么会根据模式/app/dir/*.jsp来匹配
+> 最长匹配原则(has more characters),URL请求/app/dir/file.jsp，现在存在两个路径匹配模式/**/*.jsp和/app/dir/*.jsp，那么会根据模式/app/dir/*.jsp来匹配  
 
+# Jenkins_home目录结构
+```
++ config.xml：jenkins 的核心配置文件
++ hudson.tasks.Maven.xml： Maven 的安装细节
++ *.xml： 一些插件配置信息
++ fingerprints 跟踪人工操作的痕迹
++ workspace：jenkins 对当前作业进行构建的地方,包含jenkins检验过的源码、构建本身生成的所有文件
++ jobs：构建作业的配置细节，及构建产物和数据
+    + config.xml：存放当前作业的所有配置细节
+    + nextBuildNumber：下一次构建的 number
+    + lastStable：最后一个稳定构建的链接（成功的构建）
+    + lastSuccessful：最近成功的构建链接（没有任何编译错误）
+    + builds：包含当前作业的构建历史
+        + build.xml 构建结果概要
+        + log 日志文件
+        + changelog changelog记录文件
++ plugins：存放所有已安装的插件
++ users：当使用 jenkins 本地用户数据库时，用户信息会存放在这个目录下
++ updates：存放可用的插件更新
++ userContent：存放用户自己为 jenkins 服务器定制化的一些内容
++ war：存放扩展的 web 应用程序，当以单机应用程序的形式运行 jenkins 时，会把 web 应用程序解压到这个目录。
+
+```
 
 # 插件
 ## Email Extension Template Plugin
 + 设置email  
 [email.html](./email.html)
+```
     * ${FAILED_TESTS}  #如果任何测试失败，则显示失败的单元测试信息。
         * showStack   #在失败的测试输出中显示堆栈跟踪。默认为true。
         * showMessage  #在测试输出失败时显示错误消息。默认为true。
@@ -219,6 +243,7 @@ pipeline {
     * ${PROPFILE,file="FILENAME",property="PROPERTYNAME"}   #扩展为属性文件中的属性值。文件名相对于构建工作区根目录。
     * ${FILE,path="PATH"}   #扩展为文件的内容。文件路径相对于构建工作空间根目录。
     * ${XML,file="FILE",xpath="XPATH"}  #扩展到针对给定XML文件运行的XPath表达式的结果。如果XPath求值为多个值，则返回以分号分隔的字符串。文件路径相对于构建工作空间根目录。
+```
 
 + Jenkinsfile 设定
 ```
