@@ -5,6 +5,10 @@
 docker run -u root -e TZ="Asia/Shanghai" --name myjenkins -p 8080:8080 -p 50000:50000 -v e:/jenkins/jenkins_home:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock -v E:/GoogleDrive/work_daily/daily_work:/home  jenkinsci/blueocean
 ```
 
+```docker
+docker run -u root -e TZ="Asia/Shanghai" --name myjenkins -p 8080:8080 -p 50000:50000 -v /home/longfengpili/jenkins/jenkins_home:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock -v /home/longfengpili/jenkins:/home  jenkinsci/blueocean
+```
+
 # environment
 1. 设置令牌环境变量
 ```
