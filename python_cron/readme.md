@@ -7,7 +7,7 @@
  
 # volume
  ```docker
-docker run --name mypython -v E:\GoogleDrive\work_daily\github\docker\python_cron\crontabfile:/etc/cron.d/ -v E:\GoogleDrive\work_daily\daily_work:/workspace/ python_cron:v6
+docker run --name mypython -v E:\GoogleDrive\work_daily\github\docker\python_cron\crontabfile:/etc/cron.d/ -v E:\GoogleDrive\work_daily\daily_work\bi_daily_job:/workspace/ python_cron:v6
  ```
 # TZ
 >  创建并运行容器，通过 -e TZ="Asia/Shanghai" 设置时区
