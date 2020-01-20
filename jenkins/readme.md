@@ -109,6 +109,7 @@ pipeline {
 ```
 
 # parameters
+## 基本设置
 ```
 pipeline {
     agent any
@@ -131,6 +132,22 @@ pipeline {
             }
         }
     }
+}
+```
+## 获取上一次参数的函数
+```
+def get_last_param(key) {
+    def filepath = "${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_NUMBER}/build.xml"
+    def file_contents = new File(filepath).text
+    def xmlSlurper = new XmlSlurper()
+    def doc = xmlSlurper.parseText(file_contents)
+    def parameters = doc.'**'.find {param -> param.name.text() == key}
+    if (parameters) {
+      value = parameters.value.text()
+    } else {
+      value = ''
+    }
+    return value
 }
 ```
 
