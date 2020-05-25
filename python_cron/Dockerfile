@@ -20,7 +20,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && apt-get install tzdata && echo "Asi
 ADD /crontabfile/crontab /etc/cron.d/crontab
 
 # Give execution rights on the cron job
-RUN chmod 744 /etc/cron.d/crontab
+RUN chmod 777 /etc/cron.d/crontab
 
 # Apply cron job
 RUN crontab /etc/cron.d/crontab

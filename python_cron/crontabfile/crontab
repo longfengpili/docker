@@ -1,4 +1,5 @@
-10 11 * * * bash /workspace/job_run.sh >>/var/log/cron.log
+# m h dom mon dow user  command
+03 18 * * * root bash /workspace/job_run.sh >>/var/log/cron.log
 # 50 18 * * * bash /workspace/job_run.sh >>/var/log/cron.log
 # 1 0 3 * * * bash /workspace/job_run.sh >>/var/log/cron.log
 # 1 0 * * * bash /workspace/bakeup_run.sh >>/var/log/cron.log
