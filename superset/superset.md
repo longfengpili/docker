@@ -4,12 +4,22 @@
 ```
 docker run -d --name mysuperset -p 8088:8088 -v E:/GoogleDrive/work_daily/2020.09.09-mysuperset/data:/var/lib/superset amancevice/superset
 docker exec -it mysuperset superset db upgrade
-docker exec -it mysuperset load_examples
+docker exec -it mysuperset superset load_examples
 docker exec -it mysuperset superset-init
 ```  
->数据保存在/var/lib/superset    
+>data path: /var/lib/superset  
+>superset path: /usr/local/lib/python3.6/site-packages/superset
 
-## 方法2(environment)：
+## 方法2（docker-compose）
+[docker-compose](./docker-compose.html)
+```
+docker-compose up -d
+docker-compose exec superset superset db upgrade
+docker-compose exec superset superset load_examples
+docker-compose exec superset superset-init
+```
+
+## 方法3(environment)：
 1. 支持3.6版本以上的python（建议在新的虚拟环境中操作）  
 2. 升级安装工具  
 ```
