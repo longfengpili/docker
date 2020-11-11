@@ -6,7 +6,7 @@ docker run -u root -e TZ="Asia/Shanghai" --name myjenkins -p 8080:8080 -p 50000:
 ```
 
 ```docker
-docker run -u root -e TZ="Asia/Shanghai" --name myjenkins -p 8080:8080 -p 50000:50000 -v /home/longfengpili/jenkins/jenkins_home:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock jenkinsci/blueocean
+docker run -u root -e TZ="Asia/Shanghai" --name myjenkins -p 8080:8080 -p 50000:50000 -v /home/longfengpili/myjenkins/jenkins_home:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock jenkinsci/blueocean
 ```
 
 # environment

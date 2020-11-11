@@ -13,6 +13,34 @@ PUT /shakespeare
   }
 }
 
+PUT /rum
+{
+  "mappings": {
+    "properties": {
+      "ts": {
+        "type": "date",
+        "format": "yyyy-MM-dd HH:mm:ss||yyyy-MM-dd||epoch_second"
+      },
+      "sts": {
+        "type": "date",
+        "format": "yyyy-MM-dd HH:mm:ss||yyyy-MM-dd||epoch_second"
+      },
+      "attrs": {
+        "properties": {
+          "ts": {
+            "type": "date",
+            "format": "yyyy-MM-dd HH:mm:ss||yyyy-MM-dd||epoch_millis"
+          },
+          "sts": {
+            "type": "date",
+            "format": "yyyy-MM-dd HH:mm:ss||yyyy-MM-dd||epoch_millis"
+          }
+        }
+      }
+    }
+  }
+}
+
 PUT /logstash-2015.05.18
 {
   "mappings": {
