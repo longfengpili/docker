@@ -13,7 +13,7 @@ ENV TZ=Asia/Shanghai
 RUN export DEBIAN_FRONTEND=noninteractive && apt-get install tzdata && echo $TZ > /etc/timezone && ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && dpkg-reconfigure --frontend noninteractive tzdata
 
 # install 
-RUN pip install -U pip setuptools wheel && pip install apache-airflow[mysql]
+RUN pip install -U pip setuptools wheel && pip install apache-airflow[mysql] && pip install flask_bcrypt
 
 # set workspace
 RUN mkdir -p ${AIRFLOW_HOME}

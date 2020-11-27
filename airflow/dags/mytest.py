@@ -1,7 +1,7 @@
 # @Author: chunyang.xu
 # @Email:  398745129@qq.com
 # @Date:   2020-11-25 10:56:44
-# @Last Modified time: 2020-11-27 15:39:39
+# @Last Modified time: 2020-11-27 17:59:10
 # @github: https://github.com/longfengpili
 
 # !/usr/bin/env python3
@@ -89,17 +89,17 @@ t3 = BashOperator(
 )
 
 
-def test_func(tts):
+def print_context(ds, **kwargs):
+    print(kwargs)
     print(ds)
-    print(os.environ)
-    print(tts)
-    return "test"
+    print(kwargs.get('dag_run').conf)
+    return 'Whatever you return gets printed in the logs'
 
 
 t4 = PythonOperator(
-    task_id='python_test',
-    python_callable=test_func,
-    op_kwargs={'tss': 'dsdf'},
+    task_id='print_the_context',
+    provide_context=True,
+    python_callable=print_context,
     dag=dag,
 )
 
