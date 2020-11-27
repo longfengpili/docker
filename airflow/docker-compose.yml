@@ -1,0 +1,43 @@
+version: '3'
+services:
+  db:
+    image: mysql
+    restart: always
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --init-connect='SET NAMES utf8mb4;' --innodb-flush-log-at-trx-commit=0 --explicit_defaults_for_timestamp=true
+    expose:
+      - "3306"
+    ports:
+      - "9556:3306"
+    volumes:
+      - ./db:/var/lib/mysql
+      - ./docker/mysql:/docker-entrypoint-initdb.d
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456789abc
+    networks:
+      - myairflownet
+    security_opt:
+      - seccomp:unconfined
+
+  myairflow:
+    build: 
+      context: ./docker/airflow
+      dockerfile: Dockerfile
+    container_name: myairflow
+    restart: always
+    command: webserver
+    depends_on:
+      - db
+    volumes:
+      - ./docker/airflow/entrypoint.sh:/airflow/entrypoint.sh
+      - ./docker/airflow/airflow.cfg:/airflow/airflow.cfg
+      - ./dags:/airflow/dags
+      - ./logs:/airflow/logs
+      # - ./airflow:/airflow
+    ports:
+      - 8089:8080
+      # - 5555:5555
+    networks:
+      - myairflownet
+
+networks:
+  myairflownet:
