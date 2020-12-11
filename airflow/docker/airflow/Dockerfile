@@ -19,6 +19,9 @@ RUN pip install -U pip setuptools wheel && pip install apache-airflow[mysql] && 
 RUN mkdir -p ${AIRFLOW_HOME}
 WORKDIR ${AIRFLOW_HOME}
 
+ADD ./entrypoint.sh ./entrypoint.sh
+ADD ./airflow.cfg ./airflow.cfg
+
 # start
 ENTRYPOINT ["./entrypoint.sh"]
 CMD ["webserver"]

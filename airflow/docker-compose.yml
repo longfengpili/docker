@@ -28,8 +28,8 @@ services:
     depends_on:
       - db
     volumes:
-      - ./docker/airflow/entrypoint.sh:/airflow/entrypoint.sh
-      - ./docker/airflow/airflow.cfg:/airflow/airflow.cfg
+      # - ./docker/airflow/entrypoint.sh:/airflow/entrypoint.sh
+      # - ./docker/airflow/airflow.cfg:/airflow/airflow.cfg
       - ./dags:/airflow/dags
       - ./logs:/airflow/logs
       # - ./airflow:/airflow

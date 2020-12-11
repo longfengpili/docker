@@ -16,3 +16,10 @@ airflow create_user -r Admin -u longfengpili -e 398745129@qq.com -f chunyang -l 
 ```
 kwargs.get('dag_run').conf
 ```
+
+# dags run one by one
++ 修改airflow.cfg文件
+```
+# The maximum number of active DAG runs per DAG
+max_active_runs_per_dag = 1
+``` 

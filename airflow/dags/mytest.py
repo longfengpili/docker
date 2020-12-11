@@ -1,7 +1,7 @@
 # @Author: chunyang.xu
 # @Email:  398745129@qq.com
 # @Date:   2020-11-25 10:56:44
-# @Last Modified time: 2020-11-27 17:59:10
+# @Last Modified time: 2020-12-03 17:15:31
 # @github: https://github.com/longfengpili
 
 # !/usr/bin/env python3
@@ -21,7 +21,7 @@ from airflow.utils.dates import days_ago
 default_args = {
     'owner': 'longfengpili',
     'depends_on_past': False,
-    'start_date': datetime(2020, 11, 27, 12),
+    'start_date': days_ago(2),
     'email': ['398745129@qq.com'],
     'email_on_failure': False,
     'email_on_retry': False,
