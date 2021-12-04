@@ -60,3 +60,6 @@ output {
 # mysql java 驱动
 + 不要放到pipline里，会报错
 + 下载地址：https://downloads.mysql.com/archives/c-j/, 8.0.13版本支持mysql5.0、8.0
+
+# 索引字段设置
++ `Management → 索引管理 → 索引 → 编辑设置`, `"index.mapping.total_fields.limit": "10000"`
