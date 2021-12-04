@@ -23,7 +23,7 @@ input {
         tracking_column => "timemilis"
         tracking_column_type => "numeric"
         record_last_run => true
-        last_run_metadata_path => "/etc/logstash/record_last_run.txt"
+        last_run_metadata_path => "/etc/logstash/record_last_run"
         statement => "select * from server_ctlog where timemilis >= :sql_last_value and timemilis < :sql_last_value + 120000 order by timemilis asc"
         clean_run => "false"
         schedule => "*/2 * * * *"
