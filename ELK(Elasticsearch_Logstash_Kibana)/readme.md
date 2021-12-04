@@ -14,11 +14,18 @@ input {
         jdbc_connection_string => "jdbc:mysql://xxxxxxx:9030/logs_20000063_08"
         jdbc_user => "xx"
         jdbc_password => "xx"
-        jdbc_driver_library => "/etc/logstash/pipeline/mysql-connector-java-8.0.13.jar"
+        jdbc_driver_library => "/etc/logstash/mysql-connector-java-8.0.13.jar"
         jdbc_driver_class => "com.mysql.jdbc.Driver"
-        jdbc_paging_enabled => "true"
-        jdbc_page_size => "50000"
-        statement => "select * from server_ctlog"
+        #开启分页查询
+        jdbc_paging_enabled => true
+        jdbc_page_size => 5000
+        use_column_value => true
+        tracking_column => "time"
+        tracking_column_type => "timestamp"
+        record_last_run => true
+        last_run_metadata_path => "/etc/logstash/record_last_run.txt"
+        statement => "select * from server_ctlog where time > :sql_last_value order by time asc"
+        clean_run => "false"
         schedule => "* * * * *"
     }
 }
