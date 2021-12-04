@@ -24,7 +24,7 @@ input {
         tracking_column_type => "timestamp"
         record_last_run => true
         last_run_metadata_path => "/etc/logstash/record_last_run.txt"
-        statement => "select * from server_ctlog where time > :sql_last_value order by time asc"
+        statement => "select * from server_ctlog where time >= DATE_ADD(:sql_last_value, interval 480 minute) and time < DATE_ADD(:sql_last_value, interval 482 minute) order by time asc"
         clean_run => "false"
         schedule => "* * * * *"
     }
