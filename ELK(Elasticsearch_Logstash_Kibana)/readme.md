@@ -36,7 +36,7 @@ filter {
         source => "json_log"
     }
     date {
-        match => ["time", "yyyy-MM-dd HH:mm:ss", "UNIX_MS"]
+        match => ["timemilis", "yyyy-MM-dd HH:mm:ss", "UNIX_MS"]
         target => "@timestamp"
         timezone => "+08:00"
     }
