@@ -11,22 +11,22 @@
 input {
     stdin {}
     jdbc {
-        jdbc_connection_string => "jdbc:mysql://xxxxxxx:9030/logs_20000063_08"
-        jdbc_user => "xx"
-        jdbc_password => "xx"
+        jdbc_connection_string => "jdbc:mysql://xxxx:9030/logs_20000063_08?characterEncoding=utf8&useSSL=false&serverTimezone=UTC&rewriteBatchedStatements=true"
+        jdbc_user => "xxx"
+        jdbc_password => "xxxx"
         jdbc_driver_library => "/etc/logstash/mysql-connector-java-8.0.13.jar"
         jdbc_driver_class => "com.mysql.cj.jdbc.Driver"
-        jdbc_default_timezone => "UTC"
         #开启分页查询
         jdbc_paging_enabled => false
         jdbc_page_size => 5000
-        statement => "select * from server_ctlog where timemilis >= :sql_last_value and timemilis < :sql_last_value + 120000 order by timemilis asc"
+        statement => "select * from server_ctlog where time >= :sql_last_value and time < DATE_ADD(:sql_last_value, interval 2 minute) order by time asc"
         use_column_value => true
-        tracking_column_type => "numeric"
-        tracking_column => "timemilis"
+        tracking_column_type => "timestamp"
+        tracking_column => "time"
         record_last_run => "true"
         last_run_metadata_path => "/etc/logstash/record_last_run"
         clean_run => false
+        schedule => "* * * * *"
         schedule => "* * * * *"
     }
 }
