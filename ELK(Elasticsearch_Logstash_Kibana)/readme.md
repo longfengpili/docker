@@ -15,18 +15,19 @@ input {
         jdbc_user => "xx"
         jdbc_password => "xx"
         jdbc_driver_library => "/etc/logstash/mysql-connector-java-8.0.13.jar"
-        jdbc_driver_class => "com.mysql.jdbc.Driver"
+        jdbc_driver_class => "com.mysql.cj.jdbc.Driver"
+        jdbc_default_timezone => "UTC"
         #开启分页查询
         jdbc_paging_enabled => false
         jdbc_page_size => 5000
-        use_column_value => true
-        tracking_column => "timemilis"
-        tracking_column_type => "numeric"
-        record_last_run => true
-        last_run_metadata_path => "/etc/logstash/record_last_run"
         statement => "select * from server_ctlog where timemilis >= :sql_last_value and timemilis < :sql_last_value + 120000 order by timemilis asc"
-        clean_run => "false"
-        schedule => "*/2 * * * *"
+        use_column_value => true
+        tracking_column_type => "numeric"
+        tracking_column => "timemilis"
+        record_last_run => "true"
+        last_run_metadata_path => "/etc/logstash/record_last_run"
+        clean_run => false
+        schedule => "* * * * *"
     }
 }
 
@@ -38,7 +39,6 @@ filter {
     date {
         match => ["timemilis", "yyyy-MM-dd HH:mm:ss", "UNIX_MS"]
         target => "@timestamp"
-        timezone => "+08:00"
     }
  
 }
