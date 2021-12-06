@@ -32,15 +32,16 @@ ruby {
 input {
     stdin {}
     jdbc {
-        jdbc_connection_string => "jdbc:mysql://xxxx:9030/logs_20000063_08?characterEncoding=utf8&useSSL=false&serverTimezone=UTC&rewriteBatchedStatements=true"
-        jdbc_user => "xxx"
-        jdbc_password => "xxxx"
+        jdbc_connection_string => "jdbc:mysql://xxxx:9030/logs_20000062_11?characterEncoding=utf8&useSSL=false&serverTimezone=UTC&rewriteBatchedStatements=true"
+        jdbc_user => "xxxx"
+        jdbc_password => "xxx"
         jdbc_driver_library => "/etc/logstash/mysql-connector-java-8.0.13.jar"
         jdbc_driver_class => "com.mysql.cj.jdbc.Driver"
         #开启分页查询
         jdbc_paging_enabled => false
         jdbc_page_size => 5000
-        statement => "select * from server_ctlog where time >= :sql_last_value and time < DATE_ADD(:sql_last_value, interval 2 minute) order by time asc"
+        parameters => { "uni_deviceid" => "d69145c567e8ff8caebbbf4b99b32144"}
+        statement => "select * from server_playcrab_event_data where uni_deviceid = :uni_deviceid and time >= :sql_last_value and time < DATE_ADD(:sql_last_value, interval 1 day) order by time asc"
         use_column_value => true
         tracking_column_type => "timestamp"
         tracking_column => "time"
