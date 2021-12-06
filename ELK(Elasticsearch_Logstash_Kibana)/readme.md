@@ -5,8 +5,29 @@
 + `Management → Stack Management → 索引模式`, 创建索引
 + `Analytics → Discovery` 查看数据。
 
-# 创建管道
-+ mysql(可以直接在logstash.conf里设置)
+
+# filter
+## md5
+```
+ruby {
+      code => "
+        require 'digest/md5'
+        md5 = Digest::MD5.hexdigest(event.get('json_log'))
+        event.set('computed_id', md5)
+        "
+    }
+```
+
+# mysql java 驱动
++ 不要放到pipline里，会报错
++ 下载地址：https://downloads.mysql.com/archives/c-j/, 8.0.13版本支持mysql5.0、8.0
+
+# 索引字段设置
++ `Management → 索引管理 → 索引 → 编辑设置`, `"index.mapping.total_fields.limit": "10000"`
+
+# logstash config
+## input [官方 input](https://www.elastic.co/guide/en/logstash/current/input-plugins.html)
++ mysql [jdbc](https://www.elastic.co/guide/en/logstash/current/plugins-inputs-jdbc.html)(可以直接在logstash.conf里设置)
 ```
 input {
     stdin {}
@@ -27,10 +48,12 @@ input {
         last_run_metadata_path => "/etc/logstash/record_last_run"
         clean_run => false
         schedule => "* * * * *"
-        schedule => "* * * * *"
     }
 }
+```
 
+## 解析json和data
+```
 filter {
  
     json {
@@ -42,7 +65,10 @@ filter {
     }
  
 }
-  
+```
+ 
+## output
+```
 output {
     elasticsearch {
         hosts => "elasticsearch:9200"
@@ -54,10 +80,3 @@ output {
 }
 ```
 
-
-# mysql java 驱动
-+ 不要放到pipline里，会报错
-+ 下载地址：https://downloads.mysql.com/archives/c-j/, 8.0.13版本支持mysql5.0、8.0
-
-# 索引字段设置
-+ `Management → 索引管理 → 索引 → 编辑设置`, `"index.mapping.total_fields.limit": "10000"`
