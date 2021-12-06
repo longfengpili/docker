@@ -25,7 +25,7 @@ ruby {
 # 索引字段设置
 + `Management → 索引管理 → 索引 → 编辑设置`, `"index.mapping.total_fields.limit": "10000"`
 
-# logstash config
+# Logstash config
 ## input [官方 input](https://www.elastic.co/guide/en/logstash/current/input-plugins.html)
 + mysql [jdbc](https://www.elastic.co/guide/en/logstash/current/plugins-inputs-jdbc.html)(可以直接在logstash.conf里设置)
 ```
