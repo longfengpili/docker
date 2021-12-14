@@ -1,0 +1,2 @@
+*/1 * * * * echo $(date '+\%Y-\%m-\%d \%H:\%M:\%S') hello crontab >>/var/log/cron.log
+# An empty line is required at the end of this file for a valid cron file.
