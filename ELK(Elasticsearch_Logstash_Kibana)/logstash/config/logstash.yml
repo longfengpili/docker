@@ -12,7 +12,7 @@ xpack.monitoring.elasticsearch.username: elastic
 xpack.monitoring.elasticsearch.password: changeme
 
 
-# # management 开启集中管理
+# management 开启集中管理
 # xpack.management.enabled: true
 # xpack.management.elasticsearch.hosts: "http://elasticsearch:9200"
 # xpack.management.elasticsearch.username: elastic

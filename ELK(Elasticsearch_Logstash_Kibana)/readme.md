@@ -1,7 +1,6 @@
 # 使用方法
 + `docker-compose up -d`启动
 + 打开kibana[http://127.0.0.1:5601/](http://127.0.0.1:5601/), 密码默认：elastic/changeme
-+ `Management → Stack Management → Logstash管道`, 创建管道, 具体参考下面管道创建方法
 + `Management → Stack Management → 索引模式`, 创建索引
 + `Analytics → Discovery` 查看数据。
 
@@ -25,6 +24,19 @@ ruby {
 # 索引字段设置
 + `Management → 索引管理 → 索引 → 编辑设置`, `"index.mapping.total_fields.limit": "10000"`
 
+# kibana集中管理管道
++ 在logstash/config/logstash.yml中开启集中管理
+```
+# management 开启集中管理
+# xpack.management.enabled: true
+# xpack.management.elasticsearch.hosts: "http://elasticsearch:9200"
+# xpack.management.elasticsearch.username: elastic
+# xpack.management.elasticsearch.password: changeme
+# xpack.management.logstash.poll_interval: 5s
+# xpack.management.pipeline.id: ["*logs*"]
+```
++ `Management → Stack Management → Logstash管道`, 创建管道, 具体参考下面管道创建方法
+
 # Logstash config
 ## input [官方 input](https://www.elastic.co/guide/en/logstash/current/input-plugins.html)
 + mysql [jdbc](https://www.elastic.co/guide/en/logstash/current/plugins-inputs-jdbc.html)(可以直接在logstash.conf里设置)
@@ -41,7 +53,7 @@ input {
         jdbc_paging_enabled => false
         jdbc_page_size => 5000
         parameters => { "uni_deviceid" => "d69145c567e8ff8caebbbf4b99b32144"}
-        statement => "select * from server_playcrab_event_data where uni_deviceid = :uni_deviceid and time >= :sql_last_value and time < DATE_ADD(:sql_last_value, interval 1 day) order by time asc"
+        statement => "select * from server_playcrab_event_data where uni_deviceid = :uni_deviceid and time >= :sql_last_value order by time asc limit 1000"
         use_column_value => true
         tracking_column_type => "timestamp"
         tracking_column => "time"
@@ -63,6 +75,8 @@ filter {
     date {
         match => ["timemilis", "yyyy-MM-dd HH:mm:ss", "UNIX_MS"]
         target => "@timestamp"
+        # 读取的时间时区
+        timezone => "+08:00"
     }
  
 }
@@ -77,6 +91,9 @@ output {
         password => "changeme"
         ecs_compatibility => disabled
         index => "mu3-%{+YYYY.MM.dd}"
+    }
+    stdout {
+        codec => rubydebug
     }
 }
 ```
