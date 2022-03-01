@@ -1,0 +1,16 @@
+version: '3.2'
+
+services:
+  doris:
+    image: apache/incubator-doris:build-env-ldb-toolchain-latest
+    command: tail -f /root/logs/t.log
+    volumes:
+      - type: bind
+        source: E:/github/incubator-doris
+        target: /root/incubator-doris
+        # read_only: true
+      - type: bind
+        source: ./logs
+        target: /root/logs
+    restart: always
+
