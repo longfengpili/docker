@@ -9,13 +9,13 @@ xpack.monitoring.elasticsearch.hosts: [ "http://elasticsearch:9200" ]
 #
 xpack.monitoring.enabled: true
 xpack.monitoring.elasticsearch.username: elastic
-xpack.monitoring.elasticsearch.password: changeme
+xpack.monitoring.elasticsearch.password: K4n787#cbNhm$E
 
 
 # management 开启集中管理
 # xpack.management.enabled: true
 # xpack.management.elasticsearch.hosts: "http://elasticsearch:9200"
 # xpack.management.elasticsearch.username: elastic
-# xpack.management.elasticsearch.password: changeme
+# xpack.management.elasticsearch.password: K4n787#cbNhm$E
 # xpack.management.logstash.poll_interval: 5s
 # xpack.management.pipeline.id: ["*logs*"]

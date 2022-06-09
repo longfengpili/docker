@@ -98,3 +98,5 @@ output {
 }
 ```
 
+# elasticsearch 设置密码
+```elasticsearch-setup-passwords interactive```

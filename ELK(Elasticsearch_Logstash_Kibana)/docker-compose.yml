@@ -20,7 +20,7 @@ services:
       - "9300:9300"
     environment:
       ES_JAVA_OPTS: "-Xmx512m -Xms512m"
-      ELASTIC_PASSWORD: changeme
+      ELASTIC_PASSWORD: K4n787#cbNhm$E
       # Use single node discovery in order to disable production mode and avoid bootstrap checks.
       # see: https://www.elastic.co/guide/en/elasticsearch/reference/current/bootstrap-checks.html
       discovery.type: single-node
@@ -54,7 +54,7 @@ services:
       - type: bind
         source: E:/github/addata/logs
         target: /addata/logs
-    # restart: always
+    restart: always
     ports:
       - "5044:5044"
       - "5000:5000/tcp"

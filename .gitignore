@@ -1,6 +1,8 @@
 */db
 */logs
 */edata
+*/be-storage
+*/fe-doris-meta
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

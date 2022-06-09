@@ -1,0 +1,18 @@
+version: '3.2'
+
+services:
+  elasticsearch:
+    expose:
+      - "9200"
+    privileged: true #root权限
+
+  logstash:
+    volumes:
+      - type: bind
+        source: /opt/home/service/addata/logs
+        target: /addata/logs
+      - type: bind
+        source: /opt/home/service/gamejobs
+        target: /gamejobs
+
+
