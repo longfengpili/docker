@@ -1,0 +1,28 @@
+version: '3.2'
+
+services:
+  myjenkins:
+    image: jenkinsci/blueocean
+    container_name: myjenkins
+    user: root
+    privileged: true #root权限
+    restart: always
+    ports:
+      - 8122:8080
+      - 50000:50000
+    environment:
+      TZ: Asia/Shanghai
+    volumes:
+      - type: bind
+        source: e:/jenkins_home
+        target: /var/jenkins_home
+      - type: bind
+        source: e:/github/addata
+        target: /home/addata
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+      - type: bind
+        source: /usr/bin/docker
+        target: /usr/bin/docker
+
