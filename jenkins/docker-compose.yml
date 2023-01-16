@@ -22,7 +22,6 @@ services:
       - type: bind
         source: /var/run/docker.sock
         target: /var/run/docker.sock
-      - type: bind
-        source: /usr/bin/docker
-        target: /usr/bin/docker
-
+      # - type: bind
+      #   source: /usr/bin/docker
+      #   target: /usr/bin/docker
