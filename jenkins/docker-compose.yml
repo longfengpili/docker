@@ -17,11 +17,15 @@ services:
         source: e:/jenkins_home
         target: /var/jenkins_home
       - type: bind
-        source: e:/github/addata
-        target: /home/addata
-      - type: bind
         source: /var/run/docker.sock
         target: /var/run/docker.sock
       # - type: bind
       #   source: /usr/bin/docker
       #   target: /usr/bin/docker
+  
+networks:
+  myjenkins:
+    external:
+      name: addata_jobnet
+  # addata_jobnet:
+  #   external: true
