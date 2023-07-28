@@ -32,4 +32,3 @@ connection-url=jdbc:mysql://172.18.0.3:3306
 connection-user=longfengpili
 connection-password=123456abc
 ```
-
