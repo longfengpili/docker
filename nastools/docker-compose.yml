@@ -10,16 +10,15 @@ services:
       - PGID=0
       - TZ=Asia/Shanghai
     ports:
-      - 30000:3000
+      - 9090:3000
     volumes:
       - type: bind
-        source: /volume1/docker/nastools/config
+        source: /volume1/docker/nastools/nastool/config
         target: /config
       - type: bind
         source: /volume1/video
         target: /video
-    networks:
-      - nasvideo
+    network_mode: bridge
 
   transmission:
     image: linuxserver/transmission:4.0.4
@@ -31,20 +30,21 @@ services:
       - TZ=Asia/Shanghai
       - USER=longfengpili #optional
       - PASS=xxxxxx #optional
+    expose:
+      - 9091
     ports:
-      - 30001:9091
+      - 9091:9091
     volumes:
       - type: bind
-        source: /volume1/docker/transmission/config
+        source: /volume1/docker/nastools/transmission/config
         target: /config
       - type: bind
-        source: /volume1/docker/transmission/watch
+        source: /volume1/docker/nastools/transmission/watch
         target: /watch
       - type: bind
         source: /volume1/video
         target: /downloads
-    networks:
-      - nasvideo
+    network_mode: bridge
 
   jellyfin:
     image: jellyfin/jellyfin:20231009.14-unstable
@@ -52,21 +52,18 @@ services:
     mem_limit: 4G
     environment:
       - TZ=Asia/Shanghai
+    expose:
+      - 8096
     ports:
-      - 30002:8096
+      - 9092:8096
     volumes:
       - type: bind
-        source: /volume1/docker/jellyfin/cache
+        source: /volume1/docker/nastools/jellyfin/cache
         target: /cache
       - type: bind
-        source: /volume1/docker/jellyfin/config
+        source: /volume1/docker/nastools/jellyfin/config
         target: /config
       - type: bind
         source: /volume1/video
         target: /media
-    networks:
-      - nasvideo
-
-networks:
-  nasvideo:
-    driver: bridge
+    network_mode: bridge
