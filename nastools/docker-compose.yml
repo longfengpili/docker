@@ -27,8 +27,8 @@ services:
     environment:
       - PUID=0
       - PGID=0
-      - TRANSMISSION_WEB_HOME=/config/webui
       - TZ=Asia/Shanghai
+      - TRANSMISSION_WEB_HOME=/config/webui
       - USER=longfengpili #optional
       - PASS=xxxxxx #optional
     expose:
@@ -54,6 +54,7 @@ services:
     restart: always
     mem_limit: 4G
     environment:
+      - HEALTHCHECK_URL=http://localhost:9092/health
       - TZ=Asia/Shanghai
     expose:
       - 8096
