@@ -1,0 +1,52 @@
+version: '3.2'
+
+services:
+  homeassistant:
+    image: homeassistant/home-assistant:2023.10
+    restart: always
+    mem_limit: 4G
+    environment:
+      - TZ=Asia/Shanghai
+    expose:
+      - 8123
+    ports:
+      - 30000:8123
+    volumes:
+      - type: bind
+        source: /volume1/docker/homeassistant1/homeassistant/config
+        target: /config
+    network_mode: bridge
+
+  mosquitto:
+    image: eclipse-mosquitto:2.0.18
+    restart: always
+    mem_limit: 4G
+    environment:
+      - TZ=Asia/Shanghai
+    expose:
+      - 1883
+      - 9001
+    ports:
+      - 30001:1883
+      - 30002:9001
+    volumes:
+      - type: bind
+        source: /volume1/docker/homeassistant1/mosquitto
+        target: /mosquitto
+    network_mode: bridge
+
+  nodered:
+    image: nodered/node-red:3.1
+    restart: always
+    mem_limit: 4G
+    environment:
+      - TZ=Asia/Shanghai
+    expose:
+      - 1880
+    ports:
+      - 30003:1880
+    volumes:
+      - type: bind
+        source: /volume1/docker/homeassistant1/nodered/data
+        target: /data
+    network_mode: bridge
