@@ -55,11 +55,7 @@ services:
     mem_limit: 4G
     environment:
       - TZ=Asia/Shanghai
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:9092/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
+      - HEALTHCHECK_URL=http://longfengpili.cn:9092/health
     expose:
       - 8096
     ports:
