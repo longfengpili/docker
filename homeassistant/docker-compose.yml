@@ -13,7 +13,7 @@ services:
       - 8123:8123
     volumes:
       - type: bind
-        source: /volume1/docker/homeassistant1/homeassistant/config
+        source: /volume1/docker/homeassistant/homeassistant/config
         target: /config
     network_mode: bridge
 
@@ -31,7 +31,7 @@ services:
       - 9001:9001
     volumes:
       - type: bind
-        source: /volume1/docker/homeassistant1/mosquitto
+        source: /volume1/docker/homeassistant/mosquitto
         target: /mosquitto
     network_mode: bridge
 
@@ -47,6 +47,6 @@ services:
       - 1880:1880
     volumes:
       - type: bind
-        source: /volume1/docker/homeassistant1/nodered/data
+        source: /volume1/docker/homeassistant/nodered/data
         target: /data
     network_mode: bridge
