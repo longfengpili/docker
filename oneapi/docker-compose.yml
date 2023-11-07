@@ -1,0 +1,13 @@
+version: '3.8'
+services:
+  oneapi:
+    container_name: oneapi
+    image: justsong/one-api:latest
+    restart: always
+    privileged: true
+    ports:
+      - 9009:3000
+    volumes:
+      - /volume1/docker/oneapi/data:/data
+    environment:
+      - TZ=Asia/Shanghai
