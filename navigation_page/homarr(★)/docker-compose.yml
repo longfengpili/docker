@@ -1,0 +1,17 @@
+version: "3.8"
+
+services:
+  homarr:
+    image: ghcr.io/ajnart/homarr
+    container_name: homarr
+    restart: always
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Shanghai
+      - PASSWORD=123456
+      - EDIT_MODE_PASSWORD=123456
+    volumes:
+      - /volume1/docker/homarr/app:/app
+    ports:
+      - 5006:7575
