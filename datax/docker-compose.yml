@@ -1,0 +1,11 @@
+version: '3.2'
+
+services:
+  datax:
+    build:
+      context: datax/
+    volumes:
+      - type: bind
+        source: ./datax/jobs/
+        target: /jobs
+    restart: always
