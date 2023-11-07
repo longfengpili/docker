@@ -1,0 +1,14 @@
+version: "3.8"
+services:
+  dashy:
+    image: lissy93/dashy:latest
+    container_name: dashy
+    restart: always
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Shanghai
+    volumes:
+      - /volume1/docker/dashy/app:/app
+    ports:
+      - 7577:80
