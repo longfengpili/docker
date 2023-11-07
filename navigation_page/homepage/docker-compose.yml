@@ -1,0 +1,14 @@
+version: "3.8"
+services:
+  homepage:
+    image: ghcr.io/benphelps/homepage:latest
+    container_name: homepage
+    restart: always
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Shanghai
+    volumes:
+      - /volume1/docker/homepage/app:/app
+    ports:
+      - 7576:3000
