@@ -10,5 +10,6 @@ services:
       - TZ=Asia/Shanghai
     volumes:
       - /volume1/docker/homepage/app:/app
+      - /volume1/docker/homepage/config:/config
     ports:
       - 7576:3000
