@@ -57,10 +57,26 @@ docker build -t hadoop-hive-spark-master ./master
 docker build -t hadoop-hive-spark-worker ./worker
 docker build -t hadoop-hive-spark-history ./history
 docker build -t hadoop-hive-spark-jupyter ./jupyter
-docker-compose up
+docker-compose up -d
 ```
 
+## Docker Compose 配置文件
+
+`master` 服务配置了多个端口映射。这些端口映射允许您从 Docker 容器外部（比如宿主机或网络上的其他机器）访问这些服务。下面是对 `master` 服务中每个端口映射的详细说明：
+1. **4040**: Spark 应用的 Web UI 端口。Spark 使用这个端口来提供运行中的应用程序的信息。
+2. **8020**: Hadoop NameNode IPC 端口。这是 Hadoop 文件系统的客户端与 NameNode 通信的端口。
+3. **8080**: Spark Master 的 Web UI 端口。这个界面提供了关于 Spark 集群状态的信息，如当前的作业、可用的执行器等。
+4. **8088**: YARN 资源管理器的 Web UI 端口。如果您的 Hadoop 配置使用 YARN 作为资源管理器，这个界面会提供有关集群资源使用情况的信息。
+5. **9870**: Hadoop HDFS NameNode 的 Web UI 端口。这个界面提供了关于 HDFS 状态的信息，如文件系统的健康状况、存储使用情况等。
+6. **10000**: HiveServer2 的默认端口。这个端口用于与 Hive 客户端通信，如 JDBC/ODBC 连接。
+
+
 ## 服务可以通过以下链接访问：
+
+### 注意事项
+
+- 在部署和访问这些服务时，请确保没有任何网络安全策略（如防火墙规则）阻止对这些端口的访问。
+- 如果您的宿主机上已经有服务占用了这些端口，您可能需要调整映射到宿主机的端口号以避免冲突。
 
 ### Hadoop
 
@@ -77,6 +93,8 @@ docker-compose up
 节点管理器2：http://localhost:8043
 
 ### Spark
+任务节点：http://localhost:4040
+
 主节点：http://localhost:8080
 
 工作节点1：http://localhost:8081

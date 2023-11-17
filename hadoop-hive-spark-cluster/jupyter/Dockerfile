@@ -1,4 +1,5 @@
 FROM hadoop-hive-spark-base AS base
+# FROM tensorflow/build:2.16-python3.10
 FROM tensorflow/tensorflow:latest-jupyter
 
 RUN sed -i s@/archive.ubuntu.com/@/mirrors.aliyun.com/@g /etc/apt/sources.list \
@@ -23,6 +24,7 @@ RUN echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
 
 USER $USERNAME
 
+# java
 ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/
 
 # Hadoop
@@ -47,10 +49,16 @@ ENV HIVE_CONF_DIR=$HIVE_HOME/conf
 ENV PATH=$HIVE_HOME/sbin:$HIVE_HOME/bin:$PATH
 
 RUN sudo pip install -U pip &&\
-    sudo pip install --no-cache-dir \
+    sudo pip install -i https://mirrors.ustc.edu.cn/pypi/web/simple --no-cache-dir \
     pandas \
     openpyxl \
-    findspark
+    findspark \
+    pyspark \
+    jupyterlab \
+    jupyterlab-language-pack-zh-CN \
+    nodejs \
+    matplotlib \
+    jupyterlab_execute_time
 
 WORKDIR /home/$USERNAME
 
