@@ -27,6 +27,7 @@ RUN echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
 
 USER $USERNAME
 
+# python 3.11 主要是为了兼容后面的jupyter，原因tensorflow/tensorflow:latest-jupyter使用的python版本是3.11，pyspark必须要保证python版本一致。同时pyspark的包版本必须要有spark系统版本一致。
 RUN sudo rm /usr/bin/python3 \
  && sudo ln -s /usr/bin/python3.11 /usr/bin/python3
 
