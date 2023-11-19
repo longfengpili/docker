@@ -1,3 +1,6 @@
 [submodule "myelk"]
 	path = myelk
 	url = git@github.com:longfengpili/myelk.git
+[submodule "homepage"]
+	path = homepage
+	url = git@github.com:longfengpili/homepage.git
