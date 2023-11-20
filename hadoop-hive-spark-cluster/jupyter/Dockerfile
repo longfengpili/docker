@@ -1,13 +1,17 @@
 FROM hadoop-hive-spark-base AS base
-# FROM tensorflow/build:2.16-python3.10
-FROM tensorflow/tensorflow:latest-jupyter
+# FROM tensorflow/tensorflow:2.15.0-jupyter  # 编译问题可以直接使用这个, 使用的是python3.11
+FROM ubuntu:latest
 
 RUN sed -i s@/archive.ubuntu.com/@/mirrors.aliyun.com/@g /etc/apt/sources.list \
- && apt-get -qq update  \
- && DEBIAN_FRONTEND=noninteractive apt-get -qq install --no-install-recommends \
+ && apt-get -qqy update  \
+ && DEBIAN_FRONTEND=noninteractive apt-get -qqy install --no-install-recommends \
       sudo \
       openjdk-8-jdk \
       curl \
+      gnupg \
+      procps \
+      python3.10 \
+      python3-pip \
       coreutils \
       libc6-dev \
  && rm -rf /var/lib/apt/lists/*
@@ -48,19 +52,14 @@ ENV HIVE_HOME=/opt/hive
 ENV HIVE_CONF_DIR=$HIVE_HOME/conf
 ENV PATH=$HIVE_HOME/sbin:$HIVE_HOME/bin:$PATH
 
-RUN sudo pip install -U pip &&\
-    sudo pip install -i https://mirrors.ustc.edu.cn/pypi/web/simple --no-cache-dir \
-    pandas \
-    openpyxl \
-    findspark \
-    pyspark \
-    jupyterlab \
-    jupyterlab-language-pack-zh-CN \
-    nodejs \
-    matplotlib \
-    jupyterlab_execute_time
-
 WORKDIR /home/$USERNAME
+
+#Copy requirements
+COPY requirements.txt ./requirements.txt
+#Pip
+# RUN pip3 install -i https://mirrors.ustc.edu.cn/pypi/web/simple -r requirements.txt
+RUN sudo pip3 install -i https://pypi.doubanio.com/simple/ -r requirements.txt
+
 
 COPY --chown=$USERNAME:$GROUPNAME notebook /notebook
 COPY run.sh /usr/local/sbin/run.sh

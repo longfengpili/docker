@@ -1,16 +1,15 @@
 FROM ubuntu:latest
 
 RUN sed -i s@/archive.ubuntu.com/@/mirrors.aliyun.com/@g /etc/apt/sources.list \
- && apt-get update  \
- && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+ && apt-get -qqy update  \
+ && DEBIAN_FRONTEND=noninteractive apt-get -qqy install --no-install-recommends \
       sudo \
       openjdk-8-jdk \
       curl \
       gnupg \
       procps \
-      python3.11 \
+      python3.10 \
       python3-pip \
-      python-is-python3 \
       coreutils \
       libc6-dev \
  && rm -rf /var/lib/apt/lists/*
@@ -27,9 +26,9 @@ RUN echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
 
 USER $USERNAME
 
-# python 3.11 主要是为了兼容后面的jupyter，原因tensorflow/tensorflow:latest-jupyter使用的python版本是3.11，pyspark必须要保证python版本一致。同时pyspark的包版本必须要有spark系统版本一致。
-RUN sudo rm /usr/bin/python3 \
- && sudo ln -s /usr/bin/python3.11 /usr/bin/python3
+# # python 3.11 主要是为了兼容后面的jupyter，原因tensorflow/tensorflow:latest-jupyter使用的python版本是3.11，pyspark必须要保证python版本一致。同时pyspark的包版本必须要有spark系统版本一致。
+# RUN sudo rm /usr/bin/python3 \
+#  && sudo ln -s /usr/bin/python3.11 /usr/bin/python3
 
 ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/
 

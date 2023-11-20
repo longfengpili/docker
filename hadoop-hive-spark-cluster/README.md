@@ -77,6 +77,8 @@ docker-compose up -d
 
 - 在部署和访问这些服务时，请确保没有任何网络安全策略（如防火墙规则）阻止对这些端口的访问。
 - 如果您的宿主机上已经有服务占用了这些端口，您可能需要调整映射到宿主机的端口号以避免冲突。
+- pyspark的python包版本必须与spark的版本一致，同时要求python版本也一致
+- hvie jdbc jar包可以从安装目录中拷贝出来， 容器地址：/opt/hive/jdbc
 
 ### Hadoop
 
