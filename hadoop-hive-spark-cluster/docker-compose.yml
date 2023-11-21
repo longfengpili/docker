@@ -8,7 +8,7 @@ services:
       - "5432:5432"
     volumes:
       - metastore:/var/lib/postgresql/data
-      - ./ddl/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ddl:/docker-entrypoint-initdb.d
     restart: always
     networks:
       sparknet:
@@ -156,44 +156,43 @@ volumes:
       type: none
       o: bind
       device: ./volumes/postgresql/data
-
+  ddl:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./ddl
   namenode:
     driver: local
     driver_opts:
       type: none
       o: bind
       device: ./volumes/hadoop/dfs/name
-  
   namesecondary:
-
   datanode1:
     driver: local
     driver_opts:
       type: none
       o: bind
       device: ./volumes/hadoop/dfs/data1
-
   datanode2:
     driver: local
     driver_opts:
       type: none
       o: bind
       device: ./volumes/hadoop/dfs/data2
-
   notebook:
     driver: local
     driver_opts:
       type: none
       o: bind
       device: ./jupyter/notebook
-
   nbconfig:
     driver: local
     driver_opts:
       type: none
       o: bind
       device: ./jupyter/config
-
 
 networks:
   sparknet:

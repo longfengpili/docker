@@ -1,4 +1,4 @@
 #!/bin/bash
 
 echo "Starting jupyter notebook..."
-jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --NotebookApp.token='' --notebook-dir=/notebook
+jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --NotebookApp.token='' --notebook-dir=/home/jupyter/notebook

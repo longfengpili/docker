@@ -63,7 +63,7 @@ RUN sudo pip3 install -i https://pypi.doubanio.com/simple/ -r requirements.txt
 # generate config
 RUN jupyter lab --generate-config
 
-COPY --chown=$USERNAME:$GROUPNAME notebook /notebook
+COPY --chown=$USERNAME:$GROUPNAME notebook ./notebook
 COPY run.sh /usr/local/sbin/run.sh
 RUN sudo chmod a+x /usr/local/sbin/run.sh
 CMD ["run.sh"]
