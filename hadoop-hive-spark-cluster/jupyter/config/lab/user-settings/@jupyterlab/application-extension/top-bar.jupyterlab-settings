@@ -1,0 +1,23 @@
+{
+    "toolbar": [
+        {
+            "name": "spacer",
+            "command": "",
+            "disabled": false,
+            "type": "spacer",
+            "rank": 50
+        },
+        {
+            "name": "@jupyter/collaboration:shared-link",
+            "command": "collaboration:shared-link",
+            "disabled": false,
+            "rank": 99
+        },
+        {
+            "name": "user-menu",
+            "command": "",
+            "disabled": false,
+            "rank": 100
+        }
+    ]
+}

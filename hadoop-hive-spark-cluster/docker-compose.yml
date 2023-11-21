@@ -136,7 +136,7 @@ services:
     ports:
       - "18888:8888"
     volumes:
-      - notebook:/home/jupyter
+      - notebook:/home/jupyter/notebook
       - nbconfig:/home/jupyter/.jupyter
     restart: always
     networks:
@@ -181,18 +181,18 @@ volumes:
       device: ./volumes/hadoop/dfs/data2
 
   notebook:
-    # driver: local
-    # driver_opts:
-    #   type: none
-    #   o: bind
-    #   device: ./jupyter/notebook
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./jupyter/notebook
 
   nbconfig:
-    # driver: local
-    # driver_opts:
-    #   type: none
-    #   o: bind
-    #   device: ./jupyter/config
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./jupyter/config
 
 
 networks:

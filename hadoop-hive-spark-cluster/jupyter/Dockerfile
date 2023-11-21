@@ -60,6 +60,8 @@ COPY requirements.txt ./requirements.txt
 # RUN pip3 install -i https://mirrors.ustc.edu.cn/pypi/web/simple -r requirements.txt
 RUN sudo pip3 install -i https://pypi.doubanio.com/simple/ -r requirements.txt
 
+# generate config
+RUN jupyter lab --generate-config
 
 COPY --chown=$USERNAME:$GROUPNAME notebook /notebook
 COPY run.sh /usr/local/sbin/run.sh

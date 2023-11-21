@@ -1,0 +1,11 @@
+{
+    "interactionMode": "notebook",
+    "showAllKernelActivity": false,
+    "promptCellConfig": {
+        "autoClosingBrackets": true,
+        "codeFolding": true,
+        "highlightTrailingWhitespace": true,
+        "codeFolding": true,
+        "lineNumbers": true
+    }
+}

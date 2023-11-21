@@ -1,0 +1,102 @@
+{
+    // 笔记本
+    // @jupyterlab/notebook-extension:tracker
+    // 笔记本设置。
+    // **************************************
+
+    // 自动启动首选内核。
+    // 是否自动启动首选内核。
+    "autoStartDefaultKernel": true,
+
+    // 代码单元格配置
+    // 所有代码单元格的配置；它将覆盖 CodeMirror 的默认配置。
+    "codeCellConfig": {
+        "autoClosingBrackets": true,
+        "codeFolding": true,
+        "highlightTrailingWhitespace": true,
+        "lineNumbers": true,
+        "lineWrap": true,
+        "matchBrackets": true
+    },
+
+    // 单元格默认类型
+    // 新单元格默认类型（markdown、代码或纯文本）
+    "defaultCell": "code",
+
+    // 在笔记本文档级别启用撤销/重做操作。
+    // 在笔记本文档级别启用撤销/重做操作；也就是说，在单元格内进行撤销可能会撤消在另一个单元格中发生的最新笔记本更改。这已被弃用，并将在5.0.0中删除。
+    "documentWideUndoRedo": false,
+
+    // 输入记录范围
+    // 是否应该将标准输入的行历史记录（例如ipdb提示）分别保留在不同的内核会话中（`session`），还是合并在一起（`global`）。
+    "inputHistoryScope": "global",
+
+    // 关闭内核
+    // 关闭笔记本时是否终止内核。
+    "kernelShutdown": false,
+
+    // 内核状态图标配置
+    // 定义执行进度指示器的位置和组件。
+    "kernelStatus": {
+        "showOnStatusBar": false,
+        "showProgress": true
+    },
+
+    // Markdown 单元格配置
+    // 所有Markdown单元格的配置；它将覆盖CodeMirror的默认配置。
+    "markdownCellConfig": {
+        "lineNumbers": true,
+        "matchBrackets": true
+    },
+
+    // 输出区域中输出单元格的最大数量。
+    // 对于具有多个输出的单元格，定义其输出区域要呈现的输出单元格的最大数量。输出区域将包含一个头部和部分消息内容。只有当用户单击消息后，才会显示完整的消息。设为 0 以完全显示。
+    "maxNumberOutputs": 50,
+
+    // 在视口外渲染的单元格数量
+    // 在“完整”窗口模式下，这是视口上方和下方的单元格数量。
+    "overscanCount": 1,
+
+    // 纯文本单元格配置
+    // 所有原始单元格的配置；它将覆盖 CodeMirror 的默认配置。
+    "rawCellConfig": {
+        "lineNumbers": true,
+        "matchBrackets": true
+    },
+
+    // 记录执行用时
+    // 是否在单元格元数据中记录用时数据
+    "recordTiming": true,
+
+    // 渲染布局
+    // 用来定义笔记本中渲染布局的全局设置。支持「default」或「side-by-side」。
+    "renderingLayout": "default",
+
+    // 滚动超过最后一个单元格
+    // 是否能够滚动以使最后一个单元格位于面板的顶端
+    "scrollPastEnd": true,
+
+    // 为只读的 Markdown 单元格显示编辑器
+    // 是否为只读的 Markdown 显示编辑器
+    "showEditorForReadOnlyMarkdown": true,
+
+    // 折叠时显示隐藏单元格按钮
+    // 如果设置为true，则在折叠的标题下方显示一个按钮，用以指示隐藏在折叠标题下面的单元格数量。
+    "showHiddenCellsButton": true,
+
+    // 并排显示左边距覆盖
+    // 并排显示左边距覆盖。
+    "sideBySideLeftMarginOverride": "10px",
+
+    // 并排显示输出比率
+    // 用于并排渲染，并排输出比率定义了输出与输入的宽度比率。设为 1 则为相同尺寸，大于 1 则输出尺寸更大，小于 1 则输出尺寸更小。
+    "sideBySideOutputRatio": 1,
+
+    // 并排显示右边距覆盖
+    // 并排显示右边距覆盖。
+    "sideBySideRightMarginOverride": "10px",
+
+    // 窗口模式
+    // 'defer': 改善加载时间 - 等待空闲 CPU 周期以附加视口外的单元格 - 'full': 最佳性能，但带有副作用 - 仅将视口内的单元格附加到 DOM 中 - 'none': 最差性能且没有副作用 - 将所有单元格都附加到视口中
+    "windowingMode": "defer"
+}
