@@ -42,11 +42,9 @@ Spark 的优势在于其快速的数据处理能力和多样的数据处理方�
 
 ## 组件
 
-* [Hadoop 3.3.4](https://hadoop.apache.org/)
-
-* [Hive 3.1.3](http://hive.apache.org/)
-
-* [Spark 3.3.1](https://spark.apache.org/)
++ [Hadoop 3.3.6](https://hadoop.apache.org/)
++ [Hive 3.1.3](http://hive.apache.org/)
++ [Spark 3.5.0](https://spark.apache.org/)
 
 ## 启动
 
@@ -75,10 +73,25 @@ docker-compose up -d
 
 ### 注意事项
 
-- 在部署和访问这些服务时，请确保没有任何网络安全策略（如防火墙规则）阻止对这些端口的访问。
-- 如果您的宿主机上已经有服务占用了这些端口，您可能需要调整映射到宿主机的端口号以避免冲突。
-- pyspark的python包版本必须与spark的版本一致，同时要求python版本也一致
-- hvie jdbc jar包可以从安装目录中拷贝出来， 容器地址：/opt/hive/jdbc
+1. pyspark的python包版本必须与spark的版本一致，同时要求python版本也一致
+    + 可以直接使用`FROM tensorflow/tensorflow:2.15.0-jupyter`构建对应的python版本，但这里使用的是python3.11
+    + 未保证python版本与spark的python版本一致，需要在`base`image中安装python3.11, 并修改相关的链接
+    ```yml
+    RUN sed -i s@/archive.ubuntu.com/@/mirrors.aliyun.com/@g /etc/apt/sources.list \
+     && apt-get -qqy update  \
+     && DEBIAN_FRONTEND=noninteractive apt-get -qqy install --no-install-recommends \
+          python3.11 \
+          python3-pip \
+     && rm -rf /var/lib/apt/lists/*
+
+    # python 3.11
+    RUN sudo rm /usr/bin/python3 \
+     && sudo ln -s /usr/bin/python3.11 /usr/bin/python3
+    ```
+2. 在部署和访问这些服务时，请确保没有任何网络安全策略（如防火墙规则）阻止对这些端口的访问。
+3. 如果您的宿主机上已经有服务占用了这些端口，您可能需要调整映射到宿主机的端口号以避免冲突。
+4. hvie jdbc jar包可以从安装目录中拷贝出来， 容器地址：/opt/hive/jdbc  
+    `docker-compose cp master:/opt/hive/jdbc ./`
 
 ### Hadoop
 
@@ -110,5 +123,4 @@ URI：jdbc:hive2://localhost:10000
 ### Jupyter 笔记本
 URL：http://localhost:18888
 
-示例：[jupyter/notebook/pyspark.ipynb](jupyter/notebook/pyspark.ipynb)
 

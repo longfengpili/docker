@@ -2,6 +2,8 @@
 jupyter/config/lab/workspaces/*
 !jupyter/config/lab/workspaces/.gitkeep
 
+jdbc/
+
 .bash_history
 volumes/
 

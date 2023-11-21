@@ -16,7 +16,7 @@ certifi==2023.7.22
 cffi==1.16.0
 charset-normalizer==3.3.2
 contourpy==1.2.0
-cryptography==3.4.8
+cryptography==41.0.4
 cycler==0.12.1
 debugpy==1.8.0
 decorator==5.1.1
@@ -75,7 +75,7 @@ nodejs==0.1.1
 notebook==7.0.6
 notebook_shim==0.2.3
 numpy==1.24.0
-oauthlib==3.2.0
+oauthlib==3.2.2
 openpyxl==3.1.2
 opt-einsum==3.3.0
 optional-django==0.1.0
@@ -98,7 +98,7 @@ pyasn1==0.5.0
 pyasn1-modules==0.3.0
 pycparser==2.21
 Pygments==2.16.1
-PyJWT==2.3.0
+PyJWT==2.4.0
 pyparsing==2.4.7
 pyspark==3.5.0
 python-dateutil==2.8.2
