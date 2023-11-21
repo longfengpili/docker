@@ -135,8 +135,9 @@ services:
       - worker2
     ports:
       - "18888:8888"
-#    volumes:
-#      - ./jupyter/notebook:/home/jupyter
+    volumes:
+      - notebook:/home/jupyter
+      - nbconfig:/home/jupyter/.jupyter
     restart: always
     networks:
       sparknet:
@@ -149,11 +150,50 @@ services:
       - "history:172.28.1.5"
 
 volumes:
-  namenode:
-  namesecondary:
-  datanode1:
-  datanode2:
   metastore:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./volumes/postgresql/data
+
+  namenode:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./volumes/hadoop/dfs/name
+  
+  namesecondary:
+
+  datanode1:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./volumes/hadoop/dfs/data1
+
+  datanode2:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./volumes/hadoop/dfs/data2
+
+  notebook:
+    # driver: local
+    # driver_opts:
+    #   type: none
+    #   o: bind
+    #   device: ./jupyter/notebook
+
+  nbconfig:
+    # driver: local
+    # driver_opts:
+    #   type: none
+    #   o: bind
+    #   device: ./jupyter/config
+
 
 networks:
   sparknet:

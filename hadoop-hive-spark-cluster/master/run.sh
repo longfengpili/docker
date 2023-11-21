@@ -17,7 +17,25 @@ yarn --daemon start resourcemanager
 if [ ! -f "$NAMEDIR"/initialized ]; then
   echo "Configuring Hive..."
   hdfs dfs -mkdir -p  /user/hive/warehouse
-  schematool -dbType postgres -initSchema
+
+  while true; do
+    echo "尝试初始化 Hive..."
+
+    # 执行命令
+    schematool -dbType postgres -initSchema
+
+    # 检查命令是否成功
+    if [ $? -eq 0 ]; then
+        echo "Hive 成功初始化。"
+        break
+    else
+        echo "初始化 Hive 失败，重试中..."
+    fi
+
+    # 可选：在重试之前暂停
+    sleep 5
+  done
+
   touch "$NAMEDIR"/initialized
 fi
 
