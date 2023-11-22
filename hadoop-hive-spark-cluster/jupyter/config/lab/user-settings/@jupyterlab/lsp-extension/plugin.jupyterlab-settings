@@ -1,6 +1,0 @@
-{
-    "activate": "off",
-    "setTrace": "off",
-    "logAllCommunication": false,
-    "languageServers": {}
-}
