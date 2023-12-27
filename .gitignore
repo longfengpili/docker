@@ -1,3 +1,4 @@
+volumes/
 datax/*/datax.tar.gz
 */db
 */logs
