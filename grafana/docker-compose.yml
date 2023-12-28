@@ -10,7 +10,7 @@ services:
       - storage:/var/lib/grafana
       - config:/usr/share/grafana
     environment:
-     - GF_INSTALL_PLUGINS=trino-datasource,grafana-clock-panel,fatcloud-windrose-panel,marcusolsson-treemap-panel,isaozler-paretochart-panel,nikosc-percenttrend-panel,netsage-bumpchart-panel
+     - GF_INSTALL_PLUGINS=trino-datasource,grafana-clock-panel,fatcloud-windrose-panel,marcusolsson-treemap-panel,isaozler-paretochart-panel,nikosc-percenttrend-panel,netsage-bumpchart-panel,marcusolsson-hourly-heatmap-panel
      - GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS=trino-datasource
 
 volumes:
