@@ -4,3 +4,6 @@
 [submodule "homepage"]
 	path = homepage
 	url = git@github.com:longfengpili/homepage.git
+[submodule "hadoop-hive-spark"]
+	path = hadoop-hive-spark
+	url = git@github.com:longfengpili/hadoop-hive-spark.git
