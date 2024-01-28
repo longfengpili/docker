@@ -1,0 +1,15 @@
+version: '3.8'
+services:
+  app:
+    image: jc21/nginx-proxy-manager:latest
+    restart: unless-stopped
+    network_mode: bridge
+    environment:
+      - TZ=Asia/Shanghai # set timezone, default UTC
+    ports:
+      - 997:80
+      - 998:81
+      - 999:443
+    volumes:
+      - ./data:/data
+      - ./letsencrypt:/etc/letsencrypt
