@@ -7,3 +7,9 @@
 [submodule "hadoop-hive-spark"]
 	path = hadoop-hive-spark
 	url = git@github.com:longfengpili/hadoop-hive-spark.git
+[submodule "superset"]
+	path = superset
+	url = git@github.com:longfengpili/superset.git
+[submodule "dify"]
+	path = dify
+	url = git@github.com:longfengpili/dify.git
