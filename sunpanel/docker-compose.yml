@@ -14,5 +14,6 @@ services:
       - /volume1/docker/sunpanel/conf:/app/conf:rw
       - /volume1/docker/sunpanel/uploads:/app/uploads:rw
       - /volume1/docker/sunpanel/database:/app/database:rw
+      - /volume1/docker/sunpanel/web/custom:/app/web/custom:rw
     ports:
       - 23002:3002
