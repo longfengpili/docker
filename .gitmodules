@@ -13,3 +13,6 @@
 [submodule "dify"]
 	path = dify
 	url = git@github.com:longfengpili/dify.git
+[submodule "grocy"]
+	path = grocy
+	url = git@github.com:longfengpili/grocy.git
