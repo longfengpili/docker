@@ -1,6 +1,0 @@
-pyecharts==1.7.1
-pydbapi
-numpy
-pandas
-snapshot-phantomjs
-lxml
