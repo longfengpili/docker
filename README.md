@@ -27,6 +27,12 @@ RUN apt-get update \
         build-essential \
         python3
 ```
+```
+RUN echo "deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal main restricted universe multiverse" > /etc/apt/sources.list \
+    && echo "deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal-updates main restricted universe multiverse" >> /etc/apt/sources.list \
+    && echo "deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal-backports main restricted universe multiverse" >> /etc/apt/sources.list \
+    && echo "deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal-security main restricted universe multiverse" >> /etc/apt/sources.list
+```
 + docker-compose增加hosts
 ```
     extra_hosts:
@@ -46,4 +52,16 @@ services:
       - "github.com:20.205.243.166"  
     volumes:
       - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+```
++ sh脚本中引入全局变量
+```
+#!/bin/bash
+# @Author: longfengpili
+# @Date:   2024-03-25 13:39:46
+# @Last Modified by:   longfengpili
+# @Last Modified time: 2024-06-07 13:33:30
+
+set -a
+source /workspace/trinoapi/.env
+set +a
 ```
