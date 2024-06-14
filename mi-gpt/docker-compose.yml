@@ -1,0 +1,18 @@
+services:
+  mi-gpt:
+    image: idootop/mi-gpt:latest
+    container_name: mi-gpt
+    environment:
+      - TZ=Asia/Shanghai
+    env_file:
+      - /volume1/docker/xiaomi/.env
+    volumes:
+      - /volume1/docker/xiaomi/.migpt.js:/app/.migpt.js
+    networks:
+      - myopenwrt
+    dns:
+      - 192.168.31.2
+
+networks:
+  myopenwrt:
+    external: true
