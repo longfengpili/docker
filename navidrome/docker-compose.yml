@@ -6,7 +6,7 @@ services:
     ports:
       - 4533:4533 #左侧端口如有冲突，可随意修改
     volumes:
-      - /volume1/docker/navidrome/data:/data #数据路径
+      - /volume1/docker/music/navidrome:/data #数据路径
       - /volume1/music:/music:ro #音乐路径
     environment:
       #程序默认语言
@@ -25,4 +25,15 @@ services:
       #PROXY相关
       # - HTTP_PROXY=http://proxy:port
       # - HTTPS_PROXY=http://proxy:port
+    restart: unless-stopped
+
+  music-tag:
+    image: xhongc/music_tag_web:latest
+    container_name: music-tag-web
+    ports:
+      - 8001:8001
+    volumes:
+      - /volume1/music:/app/media:rw
+      - /volume1/docker/music/tag:/app/data
+    command: /start
     restart: unless-stopped
