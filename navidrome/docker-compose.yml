@@ -40,9 +40,24 @@ services:
       - PUID=0
       - PGID=0
       # - MYSQL_HOST=localhost # mysql 局域网ip地址（没有可以不填，默认使用 sqlite）
-      # - MYSQL_PASSWORD=123456 # mysql密码（没有可以不填，默认使用 sqlite）
+      # - MYSQL_PASSWORD=123456789abc # mysql密码（没有可以不填，默认使用 sqlite）
       # - MYSQL_DB_NAME=music # 数据表名称（没有可以不填，默认使用 sqlite）
-      # - MYSQL_USER=111 # mysql 用户名（默认使用 root）
+      # - MYSQL_USER=root # mysql 用户名（默认使用 root）
       # - MYSQL_PORT=3306 # mysql 端口（默认使用 3306）
       - WORKER_NUM=8 #  后台并发执行任务的worker数量# - WORKER_NUM=8 #  后台并发执行任务的worker数量
     restart: always
+
+  # jobdb:
+  #   image: mysql:latest
+  #   restart: always
+  #   command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --init-connect='SET NAMES utf8mb4;' --innodb-flush-log-at-trx-commit=0 --explicit_defaults_for_timestamp=true
+  #   expose:
+  #     - "3306"
+  #   ports:
+  #     - 8121:3306
+  #   volumes:
+  #     - /volume1/docker/music/mysql:/docker-entrypoint-initdb.d
+  #     - /volume1/docker/music/mysql/my.cnf:/etc/mysql/conf.d/mysql.cnf
+  #     - /volume1/docker/music/mysql/data:/var/lib/mysql
+  #   environment:
+  #     - MYSQL_ROOT_PASSWORD=123456789abc
