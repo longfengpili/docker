@@ -30,10 +30,19 @@ services:
   music-tag:
     image: xhongc/music_tag_web:latest
     container_name: music-tag-web
+    # network_mode: host
     ports:
-      - 8001:8001
+      - 8002:8002
     volumes:
       - /volume1/music:/app/media:rw
       - /volume1/docker/music/tag:/app/data
-    command: /start
-    restart: unless-stopped
+    environment:
+      - PUID=0
+      - PGID=0
+      # - MYSQL_HOST=localhost # mysql 局域网ip地址（没有可以不填，默认使用 sqlite）
+      # - MYSQL_PASSWORD=123456 # mysql密码（没有可以不填，默认使用 sqlite）
+      # - MYSQL_DB_NAME=music # 数据表名称（没有可以不填，默认使用 sqlite）
+      # - MYSQL_USER=111 # mysql 用户名（默认使用 root）
+      # - MYSQL_PORT=3306 # mysql 端口（默认使用 3306）
+      - WORKER_NUM=8 #  后台并发执行任务的worker数量# - WORKER_NUM=8 #  后台并发执行任务的worker数量
+    restart: always
