@@ -1,0 +1,4 @@
+colorlog
+requests
+fake_useragent
+python-dotenv
