@@ -77,6 +77,12 @@ volumes:
       type: none
       o: bind
       device: ./etc/xiaoya
+  meta:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /volume1/video/xiaoya/meta
   media:
     driver: local
     driver_opts:
@@ -89,12 +95,12 @@ volumes:
       type: none
       o: bind
       device: /volume1/video/xiaoya/config
-  meta:
+  cache:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /volume1/video/xiaoya/meta
+      device: /volume1/video/xiaoya/cache
   jf_media:
     driver: local
     driver_opts:
@@ -107,16 +113,11 @@ volumes:
       type: none
       o: bind
       device: /volume1/video/xiaoya/jf_config
-  jf_meta:
+  jf_cache:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /volume1/video/xiaoya/jf_meta
-  cache:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: /volume1/video/xiaoya/cache
+      device: /volume1/video/xiaoya/jf_cache
+
 
