@@ -12,6 +12,7 @@ services:
     restart: unless-stopped
     networks:
       - default
+
   metadata:
     image: ghcr.io/monlor/xiaoya-metadata:latest
     env_file:
@@ -21,12 +22,16 @@ services:
       - media:/media/xiaoya
       - config:/media/config
       - cache:/media/config/cache
+      - jf_media:/media/jf_xiaoya
+      - jf_config:/media/jf_config
+      - jf_cache:/media/jf_config/cache
       - meta:/media/temp
     depends_on:
       - alist
     restart: unless-stopped
     networks:
       - default
+
   emby:
     image: ghcr.io/monlor/xiaoya-embyserver:latest
     env_file:
@@ -40,6 +45,24 @@ services:
       - cache:/cache
     ports:
       - "6908:6908"
+    restart: unless-stopped
+    networks:
+      - default
+
+  jellyfin:
+    image: ghcr.io/monlor/xiaoya-jellyfin:latest
+    env_file:
+      - env
+    privileged: true
+    depends_on:
+      - metadata
+      - alist
+    volumes:
+      - jf_media:/media
+      - jf_config:/config
+      - jf_cache:/cache
+    ports:
+      - 8096:8096
     restart: unless-stopped
     networks:
       - default
@@ -72,9 +95,28 @@ volumes:
       type: none
       o: bind
       device: /volume1/video/xiaoya/meta
+  jf_media:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /volume1/video/xiaoya/jf_media
+  jf_config:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /volume1/video/xiaoya/jf_config
+  jf_meta:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /volume1/video/xiaoya/jf_meta
   cache:
     driver: local
     driver_opts:
       type: none
       o: bind
       device: /volume1/video/xiaoya/cache
+

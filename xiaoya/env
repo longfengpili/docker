@@ -32,7 +32,7 @@ ALIST_ADDR=http://alist:5678
 # 是否启用emby
 EMBY_ENABLED=true
 # 是否启用jellyfin
-JELLYFIN_ENABLED=false
+JELLYFIN_ENABLED=true
 # 自动更新emby的配置，依赖EMBY_APIKEY
 AUTO_UPDATE_EMBY_CONFIG_ENABLED=true
 # 自动更新emby配置，config.mp4间隔，单位天，默认7天
