@@ -1,0 +1,22 @@
+services:
+  neko:
+    image: "m1k1o/neko:google-chrome"
+    #这里如果要用chrome浏览器就替换成：m1k1o/neko:google-chrome，
+    #如果是opera就替换成：m1k1o/neko:opera
+    #如果是firefox就替换成：m1k1o/neko:firefox
+    #更多浏览器和VLC等程序支持，请访问开源网页说明文档：https://neko.m1k1o.net/#/getting-started/
+    restart: "unless-stopped"
+    shm_size: "2gb" # 内存设置
+    ports:
+      - "8080:8080"  # changeme
+      - "52000-52100:52000-52100/udp"
+    environment:
+      NEKO_SCREEN: 1920x1080@30
+      NEKO_PASSWORD: 12345  #访客登录密码
+      NEKO_PASSWORD_ADMIN: admin  #管理员登录密码,不能和访客密码一样
+      NEKO_EPR: 52000-52100
+      NEKO_FILE_TRANSFER_ENABLED: true  #是否开启文件传输
+      NEKO_ICELITE: 1
+      NEKO_NAT1TO1: 172.16.2.182  #你nas的内网ip,必须修改
+    cap_add:
+      - SYS_ADMIN #给容器管理员权限，firefox不需要，其他浏览器必须!
