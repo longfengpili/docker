@@ -1,4 +1,5 @@
 # data quality
++ [docker compose](https://github.com/open-metadata/OpenMetadata/releases)
 + Strategy
     + count
         + 如果返回的是int，那么则显示具体的数值
