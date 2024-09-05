@@ -1,0 +1,32 @@
+volumes:
+  ingestion-volume-dag-airflow:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./volumes/airflow/dag_generated_configs
+  ingestion-volume-dags:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./volumes/airflow/dags
+  ingestion-volume-tmp:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./volumes/tmp
+  es-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./volumes/elasticsearch/data
+  db:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./volumes/postgresql/data
+
