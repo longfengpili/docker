@@ -1,3 +1,9 @@
+# services:
+#   ingestion:
+#     user: root
+#     environment:
+#       GUNICORN_CMD_ARGS: "--worker-tmp-dir /tmp"
+
 volumes:
   ingestion-volume-dag-airflow:
     driver: local
