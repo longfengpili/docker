@@ -1,8 +1,13 @@
-# services:
+services:
+  postgresql:
+    ports:
+      - "35432:5432"
+
 #   ingestion:
 #     user: root
 #     environment:
 #       GUNICORN_CMD_ARGS: "--worker-tmp-dir /tmp"
+
 
 volumes:
   ingestion-volume-dag-airflow:
