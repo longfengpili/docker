@@ -1,7 +1,4 @@
 services:
-  postgresql:
-    ports:
-      - "35432:5432"
 
 #   ingestion:
 #     user: root
