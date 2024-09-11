@@ -1,9 +1,11 @@
 services:
 
-#   ingestion:
-#     user: root
-#     environment:
-#       GUNICORN_CMD_ARGS: "--worker-tmp-dir /tmp"
+  ingestion:
+    # user: root
+    # environment:
+    #   GUNICORN_CMD_ARGS: "--worker-tmp-dir /tmp"
+    volumes:
+      - ingestion-python:/home/airflow/.local/lib/python3.10
 
 
 volumes:
@@ -37,4 +39,10 @@ volumes:
       type: none
       o: bind
       device: ./volumes/postgresql/data
+  ingestion-python:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./volumes/python
 
