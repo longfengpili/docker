@@ -5,7 +5,9 @@ services:
     # environment:
     #   GUNICORN_CMD_ARGS: "--worker-tmp-dir /tmp"
     volumes:
-      - ingestion-python:/home/airflow/.local/lib/python3.10
+      - ingestion-python-metadata:/home/airflow/.local/lib/python3.10/site-packages/metadata
+      - ingestion-python-pydantic:/home/airflow/.local/lib/python3.10/site-packages/pydantic
+      - ingestion-python-gunicorn:/home/airflow/.local/lib/python3.10/site-packages/gunicorn
 
 
 volumes:
@@ -39,10 +41,22 @@ volumes:
       type: none
       o: bind
       device: ./volumes/postgresql/data
-  ingestion-python:
+  ingestion-python-metadata:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: ./volumes/python
+      device: ./volumes/python/metadata
+  ingestion-python-gunicorn:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./volumes/python/gunicorn
+  ingestion-python-pydantic:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./volumes/python/pydantic
 
