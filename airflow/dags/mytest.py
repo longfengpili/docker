@@ -1,11 +1,8 @@
 # @Author: chunyang.xu
 # @Email:  398745129@qq.com
 # @Date:   2020-11-25 10:56:44
-# @Last Modified time: 2020-12-03 17:15:31
+# @Last Modified time: 2024-09-10 18:51:25
 # @github: https://github.com/longfengpili
-
-# !/usr/bin/env python3
-# -*- coding:utf-8 -*-
 
 import os
 from datetime import timedelta, datetime
