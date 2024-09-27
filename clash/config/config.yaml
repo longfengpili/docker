@@ -1,0 +1,10 @@
+ mixed-port: 7890       # 代理端口
+ allow-lan: true      # `true` 允许代理局域网
+
+ # 修改 `external-controller` 为 `0.0.0.0:9090` 广播地址
+ external-controller: '0.0.0.0:9090'
+
+ # 添加API鉴权，登录clash需要使用下面自定义的密码认证，防止盗用
+ secret: 'aaa111xxx'
+ Authorization: Bearer ${secret}
+ 
