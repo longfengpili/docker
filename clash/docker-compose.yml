@@ -4,10 +4,14 @@ services:
     restart: always
     environment:
       - TZ=Asia/Shanghai
+    expose:
+      - 7890
+      - 7891
+      - 9090
     ports:
-      - 37890:7890
-      - 39090:9090
-      - 37891:7891
+      - 27890:7890
+      - 27891:7891
+      - 29090:9090
     volumes:
       - clash-config:/root/.config/clash
 
@@ -17,7 +21,7 @@ services:
     environment:
       - TZ=Asia/Shanghai
     ports:
-      - 39080:80
+      - 29080:80
 
 volumes:
   clash-config:
