@@ -1,0 +1,38 @@
+services:
+  postgres:
+    image: postgres:15
+    container_name: linkwarden_db
+    restart: always
+    environment:
+      POSTGRES_USER: linkwarden
+      POSTGRES_PASSWORD: qP4oMQGewTi
+      POSTGRES_DB: linkwarden
+    expose:
+      - 5432
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "linkwarden"]
+      interval: 15s
+      timeout: 10s
+      retries: 10
+
+  linkwarden:
+    image: ghcr.io/linkwarden/linkwarden:latest 
+    container_name: linkwarden_web
+    restart: always
+    environment:
+      NEXTAUTH_SECRET: 123456 # 密钥，自行修改一个随机值
+      NEXTAUTH_URL: http://longfengpili.cn:3000/api/v1/auth # yourdomain.com改成你的域名或ip及端口
+      DATABASE_URL: postgresql://linkwarden:qP4oMQGewTi@postgres:5432/linkwarden # 其中username和password分别是postgres的用户名和密码
+    ports:
+      - 3000:3000
+    volumes:
+      - ./data:/data/data
+    logging:
+      options:
+        max-size: "5m"
+        max-file: "5"
+    depends_on:
+      postgres:
+        condition: service_healthy
