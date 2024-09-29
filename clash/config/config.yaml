@@ -1,10 +1,83 @@
- mixed-port: 7890       # 代理端口
- allow-lan: true      # `true` 允许代理局域网
+# 配置文件的端口
+port: 7890
+socks-port: 7891
+redir-port: 7892
 
- # 修改 `external-controller` 为 `0.0.0.0:9090` 广播地址
- external-controller: '0.0.0.0:9090'
+# 允许局域网连接
+allow-lan: true
 
- # 添加API鉴权，登录clash需要使用下面自定义的密码认证，防止盗用
- secret: 'aaa111xxx'
- Authorization: Bearer ${secret}
- 
+# 日志级别 (可选: silent, error, warning, info, debug)
+log-level: info
+
+# RESTful API 和 UI 的配置
+external-controller: 127.0.0.1:9090
+
+mode: Rule
+
+# 添加API鉴权，登录clash需要使用下面自定义的密码认证，防止盗用
+secret: '1111aaaxx'
+Authorization: Bearer ${secret}
+
+dns:
+  enable: true
+  ipv6: false
+  nameserver:
+    - 223.5.5.5
+    - 180.76.76.76
+    - 119.29.29.29
+    - 117.50.11.11
+    - 117.50.10.10
+    - 114.114.114.114
+    - https://dns.alidns.com/dns-query
+    - https://doh.360.cn/dns-query
+  fallback:
+    - 8.8.8.8
+    - tls://dns.rubyfish.cn:853
+    - tls://1.0.0.1:853
+    - tls://dns.google:853
+    - https://dns.rubyfish.cn/dns-query
+    - https://cloudflare-dns.com/dns-query
+    - https://dns.google/dns-query
+  fallback-filter:
+    geoip: true
+    ipcidr:
+      - 240.0.0.0/4
+      - 0.0.0.0/32
+      - 127.0.0.1/32
+    domain:
+      - +.google.com
+      - +.facebook.com
+      - +.youtube.com
+      - +.xn--ngstr-lra8j.com
+      - +.google.cn
+      - +.googleapis.cn
+      - +.gvt1.com
+proxies:
+  - name: 有效期2025/02/17,剩余:98.74GB
+    type: trojan
+    server: iplc-hk-beta1.trojanwheel.com
+    port: 5001
+    password: KSxcxYNsf7i103isiYxqems
+    alpn:
+      - h2
+      - http/1.1
+    skip-cert-verify: true
+proxy-groups:
+  - name: Proxy
+    type: select
+    proxies:
+      - Auto
+      - 有效期2025/02/17,剩余:98.74GB
+  - name: Auto
+    type: url-test
+    url: http://www.gstatic.com/generate_204
+    interval: 300
+    proxies:
+      - 有效期2025/02/17,剩余:98.74GB
+rules:
+  - DOMAIN-SUFFIX,ghcr.io,Proxy
+  - DOMAIN-KEYWORD,googleapis.cn,Proxy
+  - DOMAIN,safebrowsing.urlsec.qq.com,DIRECT
+  - IP-CIDR,91.108.4.0/22,Proxy,no-resolve  # 匹配 IP 地址在 91.108.4.0/22 网段内的流量，通过 Proxy，并且不进行域名解析（no-resolve）
+  - GEOIP,CN,DIRECT
+  - MATCH,Proxy
