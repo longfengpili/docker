@@ -1,4 +1,0 @@
-psycopg2-binary
-pydbapi
-requests
-fake_useragent
