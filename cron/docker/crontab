@@ -11,5 +11,5 @@
 # minute (m), hour (h), day of month (dom), month (mon),
 # and day of week (dow) or use '*' in these fields (for 'any').
 */1 * * * * echo $(date '+\%Y-\%m-\%d \%H:\%M:\%S') hello crontab 2>&1 >> /var/log/cron.log
-*/1 * * * * /usr/bin/python3.8 /workspace/test.py 2>&1 >> /workspace/logpy.log
-*/1 * * * * /usr/bin/bash /workspace/bash.sh 2>&1 >> /workspace/logbash.log
+*/1 * * * * /usr/bin/python3 /workspace/code/test.py 2>&1 >> /workspace/logpy.log
+*/1 * * * * /usr/bin/bash /workspace/code/bash.sh 2>&1 >> /workspace/logbash.log
