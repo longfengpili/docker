@@ -1,9 +1,17 @@
 services:
+  postgresql:
+    # environment:
+    #   POSTGRES_USER: longfengpili
+    #   POSTGRES_PASSWORD: 123456abc
+    # healthcheck:
+    #   test: psql -U longfengpili -tAc 'select 1' -d openmetadata_db
+    #   interval: 15s
+    #   timeout: 10s
+    #   retries: 10
+    volumes:
+      - db:/var/lib/postgresql/data
 
   ingestion:
-    # user: root
-    # environment:
-    #   GUNICORN_CMD_ARGS: "--worker-tmp-dir /tmp"
     volumes:
       - ingestion-python-metadata:/home/airflow/.local/lib/python3.10/site-packages/metadata
       - ingestion-python-pydantic:/home/airflow/.local/lib/python3.10/site-packages/pydantic
@@ -34,13 +42,13 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: ./volumes/elasticsearch/data
+      device: ./volumes/elasticsearch
   db:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: ./volumes/postgresql/data
+      device: ./volumes/postgresql
   ingestion-python-metadata:
     driver: local
     driver_opts:
