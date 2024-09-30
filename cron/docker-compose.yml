@@ -18,20 +18,22 @@ services:
 
   cron:
     build: 
-      context: ./cron
+      context: ./docker
       dockerfile: Dockerfile
+    container_name: mycron
+    env_file:
+      - ./.env
     restart: always
     privileged: true #root权限
     command: 
       - /bin/bash
       - -c
       - |
-        env > /etc/default/locale
         cron
         crontab /etc/cron.d/crontab
-        tail -f /var/log/cron.log
+        tail -f /dev/null
     volumes:
-      - ./code:/workspace
-      - ./cron/crontab:/etc/cron.d/crontab
+      - .:/workspace
+      - ./docker/crontab:/etc/cron.d/crontab
 
   
