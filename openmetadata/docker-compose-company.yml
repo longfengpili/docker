@@ -9,6 +9,8 @@ x-airflow-db: &airflow-db airflow_db
 x-airflow-user: &airflow-user test_airflow_user
 x-airflow-password: &airflow-password test_airflow_password
 
+x-airflow-admin-user: &airflow-admin-user longfengpili
+x-airflow-admin-password: &airflow-admin-password 123456abc
 
 services:
   postgresql:
@@ -37,8 +39,8 @@ services:
       DB_USER_PASSWORD: *openmetadata-password
 
       #airflow parameters
-      AIRFLOW_USERNAME: ${AIRFLOW_USERNAME:-admin}
-      AIRFLOW_PASSWORD: ${AIRFLOW_PASSWORD:-admin}
+      AIRFLOW_USERNAME: *airflow-admin-user
+      AIRFLOW_PASSWORD: *airflow-admin-password
 
   openmetadata-server:
     environment:
@@ -47,13 +49,15 @@ services:
       DB_USER_PASSWORD: *openmetadata-password
       
       #airflow parameters
-      AIRFLOW_USERNAME: ${AIRFLOW_USERNAME:-admin}
-      AIRFLOW_PASSWORD: ${AIRFLOW_PASSWORD:-admin}
+      AIRFLOW_USERNAME: *airflow-admin-user
+      AIRFLOW_PASSWORD: *airflow-admin-password
 
   ingestion:
     environment:
       DB_USER: *airflow-user
       DB_PASSWORD: *airflow-password
+      AIRFLOW_ADMIN_USER: *airflow-admin-user
+      AIRFLOW_ADMIN_PASSWORD: *airflow-admin-password
     volumes:
       - ingestion-python-metadata:/home/airflow/.local/lib/python3.10/site-packages/metadata
       - ingestion-python-pydantic:/home/airflow/.local/lib/python3.10/site-packages/pydantic
