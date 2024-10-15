@@ -55,3 +55,32 @@ def notify(self):
     except Exception as e:
         print(e)
 ```
+
+# dag airflow_lineage_operator error
+```
+Broken DAG: [/opt/airflow/dags/airflow_lineage_operator.py]
+Traceback (most recent call last):
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/opt/airflow/dags/airflow_lineage_operator.py", line 67, in <module>
+    raise RuntimeError(f"Could not fetch {DEFAULT_OM_AIRFLOW_CONNECTION} connection")
+RuntimeError: Could not fetch openmetadata_conn_id connection
+```
+解决办法：
+```
+import base64
+# 基本认证的 Base64 编码
+AIRFLOW_USERNAME = "stadmin"  # 确保与实际设置一致
+AIRFLOW_PASSWORD = "stadmin"  # 确保与实际设置一致
+auth_string = f"{AIRFLOW_USERNAME}:{AIRFLOW_PASSWORD}"
+auth_bytes = auth_string.encode("utf-8")
+auth_base64 = base64.b64encode(auth_bytes).decode("utf-8")
+auth_base64
+```
+替换
+```
+DEFAULT_AIRFLOW_HEADERS = {
+    "Content-Type": "application/json",
+    "Authorization": "Basic c3RhZG1pbjpzdGFkbWlu",
+}
+中的Authorization
+```
