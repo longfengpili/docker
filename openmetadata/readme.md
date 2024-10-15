@@ -68,11 +68,11 @@ RuntimeError: Could not fetch openmetadata_conn_id connection
 解决办法(修改Authorization)：
 ```
 # 从环境变量中获取用户名和密码
-AIRFLOW_ADMIN_USERNAME = os.getenv("AIRFLOW_ADMIN_USERNAME", "default_username")
+AIRFLOW_ADMIN_USER = os.getenv("AIRFLOW_ADMIN_USER", "default_username")
 AIRFLOW_ADMIN_PASSWORD = os.getenv("AIRFLOW_ADMIN_PASSWORD", "default_password")
 
 # 基本认证的 Base64 编码
-auth_string = f"{AIRFLOW_ADMIN_USERNAME}:{AIRFLOW_ADMIN_PASSWORD}"
+auth_string = f"{AIRFLOW_ADMIN_USER}:{AIRFLOW_ADMIN_PASSWORD}"
 auth_bytes = auth_string.encode("utf-8")
 auth_base64 = base64.b64encode(auth_bytes).decode("utf-8")
 
