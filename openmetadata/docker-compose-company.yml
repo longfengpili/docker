@@ -1,21 +1,20 @@
-x-postgres-user: &postgres-user longfengpili
-x-postgres-password: &postgres-password 123456abc
+# pgsql config
+x-postgres-user: &postgres-user ${POSTGRES_USER:-postgres}
+x-postgres-password: &postgres-password ${POSTGRES_PASSWORD:-password}
 
-x-openmetadata-db: &openmetadata-db openmetadata_db
-x-openmetadata-user: &openmetadata-user test_openmetadata_user
-x-openmetadata-password: &openmetadata-password test_openmetadata_password
+# openmetadata db
+x-openmetadata-db: &openmetadata-db ${OPENMETADATA_DB:-openmetadata_db}
+x-openmetadata-user: &openmetadata-user ${OPENMETADATA_USER:-openmetadata_user}
+x-openmetadata-password: &openmetadata-password ${OPENMETADATA_PASSWORD:-openmetadata_password}
 
-x-airflow-db: &airflow-db airflow_db
-x-airflow-user: &airflow-user test_airflow_user
-x-airflow-password: &airflow-password test_airflow_password
+# airflow db
+x-airflow-db: &airflow-db ${AIRFLOW_DB:-airflow_db}
+x-airflow-user: &airflow-user ${AIRFLOW_USER:-airflow_user}
+x-airflow-password: &airflow-password ${AIRFLOW_PASSWORD:-airflow_password}
 
-x-openmetadata-admin-principals: &openmetadata-admin-principals [longfengpili]
-x-openmetadata-domain: &openmetadata-domain sincetimes.com
-x-openmetadata-enforce-domain: &openmetadata-enforce-domain true
-x-openmetadata-bot-principals: &openmetadata-bot-principals [sincetimes-bot]
-
-x-airflow-admin-user: &airflow-admin-user longfengpili
-x-airflow-admin-password: &airflow-admin-password 123456abc
+# airflow admin
+x-airflow-admin-user: &airflow-admin-user ${AIRFLOW_ADMIN_USER:-admin}
+x-airflow-admin-password: &airflow-admin-password ${AIRFLOW_ADMIN_PASSWORD:-admin}
 
 services:
   postgresql:
@@ -29,7 +28,7 @@ services:
       AIRFLOW_USER: *airflow-user
       AIRFLOW_PASSWORD: *airflow-password
     healthcheck:
-      test: psql -U longfengpili -tAc 'select 1' -d openmetadata_db
+      test: ["CMD-SHELL", "psql -U ${POSTGRES_USER} -tAc 'select 1' -d ${OPENMETADATA_DB}"]
       interval: 15s
       timeout: 10s
       retries: 10
@@ -39,13 +38,8 @@ services:
 
   execute-migrate-all:
     environment:
-      # OpenMetadata Server Authentication Configuration
-      AUTHORIZER_ADMIN_PRINCIPALS: *openmetadata-admin-principals
-      AUTHORIZER_PRINCIPAL_DOMAIN: *openmetadata-domain
-      AUTHORIZER_ENFORCE_PRINCIPAL_DOMAIN: *openmetadata-enforce-domain
-      AUTHORIZER_INGESTION_PRINCIPALS: *openmetadata-bot-principals
-
       # Database configuration for postgresql
+      OM_DATABASE: *openmetadata-db
       DB_USER: *openmetadata-user
       DB_USER_PASSWORD: *openmetadata-password
 
@@ -55,13 +49,8 @@ services:
 
   openmetadata-server:
     environment:
-      # OpenMetadata Server Authentication Configuration
-      AUTHORIZER_ADMIN_PRINCIPALS: *openmetadata-admin-principals
-      AUTHORIZER_PRINCIPAL_DOMAIN: *openmetadata-domain
-      AUTHORIZER_ENFORCE_PRINCIPAL_DOMAIN: *openmetadata-enforce-domain
-      AUTHORIZER_INGESTION_PRINCIPALS: *openmetadata-bot-principals
-
       # Database configuration for postgresql
+      OM_DATABASE: *openmetadata-db
       DB_USER: *openmetadata-user
       DB_USER_PASSWORD: *openmetadata-password
       
@@ -71,10 +60,15 @@ services:
 
   ingestion:
     environment:
+      # Database configuration for postgresql
+      AIRFLOW_DB: *airflow-db
       DB_USER: *airflow-user
       DB_PASSWORD: *airflow-password
+
+      # airflow parameters
       AIRFLOW_ADMIN_USER: *airflow-admin-user
       AIRFLOW_ADMIN_PASSWORD: *airflow-admin-password
+
     volumes:
       - ingestion-python-metadata:/home/airflow/.local/lib/python3.10/site-packages/metadata
       - ingestion-python-pydantic:/home/airflow/.local/lib/python3.10/site-packages/pydantic
