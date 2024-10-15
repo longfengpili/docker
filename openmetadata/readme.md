@@ -65,22 +65,19 @@ Traceback (most recent call last):
     raise RuntimeError(f"Could not fetch {DEFAULT_OM_AIRFLOW_CONNECTION} connection")
 RuntimeError: Could not fetch openmetadata_conn_id connection
 ```
-解决办法：
+解决办法(修改Authorization)：
 ```
-import base64
+# 从环境变量中获取用户名和密码
+AIRFLOW_ADMIN_USERNAME = os.getenv("AIRFLOW_ADMIN_USERNAME", "default_username")
+AIRFLOW_ADMIN_PASSWORD = os.getenv("AIRFLOW_ADMIN_PASSWORD", "default_password")
+
 # 基本认证的 Base64 编码
-AIRFLOW_USERNAME = "stadmin"  # 确保与实际设置一致
-AIRFLOW_PASSWORD = "stadmin"  # 确保与实际设置一致
-auth_string = f"{AIRFLOW_USERNAME}:{AIRFLOW_PASSWORD}"
+auth_string = f"{AIRFLOW_ADMIN_USERNAME}:{AIRFLOW_ADMIN_PASSWORD}"
 auth_bytes = auth_string.encode("utf-8")
 auth_base64 = base64.b64encode(auth_bytes).decode("utf-8")
-auth_base64
-```
-替换
-```
+
 DEFAULT_AIRFLOW_HEADERS = {
     "Content-Type": "application/json",
-    "Authorization": "Basic c3RhZG1pbjpzdGFkbWlu",
+    "Authorization": f"Basic {auth_base64}",
 }
-中的Authorization
 ```
