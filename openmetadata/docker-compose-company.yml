@@ -1,17 +1,59 @@
+x-postgres-user: &postgres-user longfengpili
+x-postgres-password: &postgres-password 123456abc
+
+x-openmetadata-db: &openmetadata-db openmetadata_db
+x-openmetadata-user: &openmetadata-user test_openmetadata_user
+x-openmetadata-password: &openmetadata-password test_openmetadata_password
+
+x-airflow-db: &airflow-db airflow_db
+x-airflow-user: &airflow-user test_airflow_user
+x-airflow-password: &airflow-password test_airflow_password
+
+
 services:
   postgresql:
-    # environment:
-    #   POSTGRES_USER: longfengpili
-    #   POSTGRES_PASSWORD: 123456abc
-    # healthcheck:
-    #   test: psql -U longfengpili -tAc 'select 1' -d openmetadata_db
-    #   interval: 15s
-    #   timeout: 10s
-    #   retries: 10
+    environment:
+      POSTGRES_USER: *postgres-user
+      POSTGRES_PASSWORD: *postgres-password
+      OPENMETADATA_DB: *openmetadata-db
+      OPENMETADATA_USER: *openmetadata-user
+      OPENMETADATA_PASSWORD: *openmetadata-password
+      AIRFLOW_DB: *airflow-db
+      AIRFLOW_USER: *airflow-user
+      AIRFLOW_PASSWORD: *airflow-password
+    healthcheck:
+      test: psql -U longfengpili -tAc 'select 1' -d openmetadata_db
+      interval: 15s
+      timeout: 10s
+      retries: 10
     volumes:
       - db:/var/lib/postgresql/data
+      - dbinit:/docker-entrypoint-initdb.d
+
+  execute-migrate-all:
+    environment:
+      # Database configuration for postgresql
+      DB_USER: *openmetadata-user
+      DB_USER_PASSWORD: *openmetadata-password
+
+      #airflow parameters
+      AIRFLOW_USERNAME: ${AIRFLOW_USERNAME:-admin}
+      AIRFLOW_PASSWORD: ${AIRFLOW_PASSWORD:-admin}
+
+  openmetadata-server:
+    environment:
+      # Database configuration for postgresql
+      DB_USER: *openmetadata-user
+      DB_USER_PASSWORD: *openmetadata-password
+      
+      #airflow parameters
+      AIRFLOW_USERNAME: ${AIRFLOW_USERNAME:-admin}
+      AIRFLOW_PASSWORD: ${AIRFLOW_PASSWORD:-admin}
 
   ingestion:
+    environment:
+      DB_USER: *airflow-user
+      DB_PASSWORD: *airflow-password
     volumes:
       - ingestion-python-metadata:/home/airflow/.local/lib/python3.10/site-packages/metadata
       - ingestion-python-pydantic:/home/airflow/.local/lib/python3.10/site-packages/pydantic
@@ -49,6 +91,12 @@ volumes:
       type: none
       o: bind
       device: ./volumes/postgresql
+  dbinit:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./docker/postgresql/docker-entrypoint-initdb.d
   ingestion-python-metadata:
     driver: local
     driver_opts:
