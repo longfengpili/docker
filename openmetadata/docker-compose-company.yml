@@ -9,6 +9,11 @@ x-airflow-db: &airflow-db airflow_db
 x-airflow-user: &airflow-user test_airflow_user
 x-airflow-password: &airflow-password test_airflow_password
 
+x-openmetadata-admin-principals: &openmetadata-admin-principals [longfengpili]
+x-openmetadata-domain: &openmetadata-domain sincetimes.com
+x-openmetadata-enforce-domain: &openmetadata-enforce-domain true
+x-openmetadata-bot-principals: &openmetadata-bot-principals [sincetimes-bot]
+
 x-airflow-admin-user: &airflow-admin-user longfengpili
 x-airflow-admin-password: &airflow-admin-password 123456abc
 
@@ -34,6 +39,12 @@ services:
 
   execute-migrate-all:
     environment:
+      # OpenMetadata Server Authentication Configuration
+      AUTHORIZER_ADMIN_PRINCIPALS: *openmetadata-admin-principals
+      AUTHORIZER_PRINCIPAL_DOMAIN: *openmetadata-domain
+      AUTHORIZER_ENFORCE_PRINCIPAL_DOMAIN: *openmetadata-enforce-domain
+      AUTHORIZER_INGESTION_PRINCIPALS: *openmetadata-bot-principals
+
       # Database configuration for postgresql
       DB_USER: *openmetadata-user
       DB_USER_PASSWORD: *openmetadata-password
@@ -44,6 +55,12 @@ services:
 
   openmetadata-server:
     environment:
+      # OpenMetadata Server Authentication Configuration
+      AUTHORIZER_ADMIN_PRINCIPALS: *openmetadata-admin-principals
+      AUTHORIZER_PRINCIPAL_DOMAIN: *openmetadata-domain
+      AUTHORIZER_ENFORCE_PRINCIPAL_DOMAIN: *openmetadata-enforce-domain
+      AUTHORIZER_INGESTION_PRINCIPALS: *openmetadata-bot-principals
+
       # Database configuration for postgresql
       DB_USER: *openmetadata-user
       DB_USER_PASSWORD: *openmetadata-password
