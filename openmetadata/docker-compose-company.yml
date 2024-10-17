@@ -15,7 +15,7 @@ x-airflow-password: &airflow-password ${AIRFLOW_PASSWORD:-airflow_password}
 # elasticsearch
 x-xpack-security-enabled: &xpack-security-enabled ${XPACK_SECURITY_ENABLED:-false}
 x-elastic-user: &elastic-user elastic
-x-elastic-password: &elastic-password ${ELASTIC_PASSWORD:-""}
+x-elastic-password: &elastic-password ${ELASTIC_PASSWORD:-elastic}
 
 # airflow admin
 x-airflow-admin-user: &airflow-admin-user ${AIRFLOW_ADMIN_USER:-admin}
