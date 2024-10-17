@@ -12,6 +12,10 @@ x-airflow-db: &airflow-db ${AIRFLOW_DB:-airflow_db}
 x-airflow-user: &airflow-user ${AIRFLOW_USER:-airflow_user}
 x-airflow-password: &airflow-password ${AIRFLOW_PASSWORD:-airflow_password}
 
+# elasticsearch
+x-es-user: &es-user ${ES_USER:-"elastic"}
+x-es-password: &es-password ${ES_PASSWORD:-""}
+
 # airflow admin
 x-airflow-admin-user: &airflow-admin-user ${AIRFLOW_ADMIN_USER:-admin}
 x-airflow-admin-password: &airflow-admin-password ${AIRFLOW_ADMIN_PASSWORD:-admin}
@@ -36,6 +40,21 @@ services:
       - db:/var/lib/postgresql/data
       - dbinit:/docker-entrypoint-initdb.d
 
+  elasticsearch:
+    environment:
+      xpack.security.enabled: true
+      ELASTIC_PASSWORD: *es-password
+    healthcheck:
+      test: 
+        - CMD-SHELL
+        - |
+          curl -s -u ${ES_USER}:${ES_PASSWORD} http://localhost:9200/_cluster/health?pretty | \
+          grep status | \
+          grep -qE 'green|yellow' || exit 1
+      interval: 15s
+      timeout: 10s
+      retries: 10
+
   execute-migrate-all:
     environment:
       # Database configuration for postgresql
@@ -47,6 +66,10 @@ services:
       AIRFLOW_USERNAME: *airflow-admin-user
       AIRFLOW_PASSWORD: *airflow-admin-password
 
+      # elasticsearch
+      ELASTICSEARCH_USER: *es-user
+      ELASTICSEARCH_PASSWORD: *es-password
+
   openmetadata-server:
     environment:
       # Database configuration for postgresql
@@ -57,6 +80,10 @@ services:
       #airflow parameters
       AIRFLOW_USERNAME: *airflow-admin-user
       AIRFLOW_PASSWORD: *airflow-admin-password
+
+      # elasticsearch
+      ELASTICSEARCH_USER: *es-user
+      ELASTICSEARCH_PASSWORD: *es-password
 
   ingestion:
     environment:
