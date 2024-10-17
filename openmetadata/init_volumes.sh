@@ -1,3 +1,7 @@
+if [ "\$1" = "delete" ]; then
+    rm -rf ./volumes
+fi
+
 mkdir -p ./volumes/airflow/dag_generated_configs
 mkdir -p ./volumes/airflow/dags
 mkdir -p ./volumes/tmp
