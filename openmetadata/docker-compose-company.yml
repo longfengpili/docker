@@ -13,8 +13,9 @@ x-airflow-user: &airflow-user ${AIRFLOW_USER:-airflow_user}
 x-airflow-password: &airflow-password ${AIRFLOW_PASSWORD:-airflow_password}
 
 # elasticsearch
-x-es-user: &es-user ${ES_USER:-"elastic"}
-x-es-password: &es-password ${ES_PASSWORD:-""}
+x-xpack-security-enabled: &xpack-security-enabled ${XPACK_SECURITY_ENABLED:-false}
+x-elastic-user: &elastic-user elastic
+x-elastic-password: &elastic-password ${ELASTIC_PASSWORD:-""}
 
 # airflow admin
 x-airflow-admin-user: &airflow-admin-user ${AIRFLOW_ADMIN_USER:-admin}
@@ -42,13 +43,13 @@ services:
 
   elasticsearch:
     environment:
-      xpack.security.enabled: true
-      ELASTIC_PASSWORD: *es-password
+      xpack.security.enabled: *xpack-security-enabled
+      ELASTIC_PASSWORD: *elastic-password
     healthcheck:
       test: 
         - CMD-SHELL
         - |
-          curl -s -u ${ES_USER}:${ES_PASSWORD} http://localhost:9200/_cluster/health?pretty | \
+          curl -s -u elastic:${ELASTIC_PASSWORD} http://localhost:9200/_cluster/health?pretty | \
           grep status | \
           grep -qE 'green|yellow' || exit 1
       interval: 15s
@@ -67,8 +68,8 @@ services:
       AIRFLOW_PASSWORD: *airflow-admin-password
 
       # elasticsearch
-      ELASTICSEARCH_USER: *es-user
-      ELASTICSEARCH_PASSWORD: *es-password
+      ELASTICSEARCH_USER: *elastic-user
+      ELASTICSEARCH_PASSWORD: *elastic-password
 
   openmetadata-server:
     environment:
@@ -82,8 +83,8 @@ services:
       AIRFLOW_PASSWORD: *airflow-admin-password
 
       # elasticsearch
-      ELASTICSEARCH_USER: *es-user
-      ELASTICSEARCH_PASSWORD: *es-password
+      ELASTICSEARCH_USER: *elastic-user
+      ELASTICSEARCH_PASSWORD: *elastic-password
 
   ingestion:
     environment:
