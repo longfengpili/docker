@@ -8,6 +8,5 @@ services:
     ports:
       - 9000:9000
     volumes:
-      - ./volumes/config:/webhook/config
-      - ./volumes/scripts:/webhook/scripts
+      - ./volumes:/webhook
 
