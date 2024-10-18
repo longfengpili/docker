@@ -6,8 +6,8 @@ services:
     container_name: webhook
     command: -verbose -hooks=/webhook/config/hooks.yaml -hotreload
     ports:
-      - "9000:9000"
-    # volumes:
-    #   - ./config:/webhook/config
-    #   - ./scripts:/webhook/scripts
+      - 9000:9000
+    volumes:
+      - ./volumes/config:/webhook/config
+      - ./volumes/scripts:/webhook/scripts
 
