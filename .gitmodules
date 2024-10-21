@@ -16,3 +16,6 @@
 [submodule "grocy"]
 	path = grocy
 	url = git@github.com:longfengpili/grocy.git
+[submodule "openmetadata"]
+	path = openmetadata
+	url = git@github.com:longfengpili/openmetadata.git
