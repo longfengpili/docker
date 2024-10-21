@@ -19,11 +19,10 @@ RUN echo "deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal main restricted 
     && echo "deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal-backports main restricted universe multiverse" >> /etc/apt/sources.list \
     && echo "deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal-security main restricted universe multiverse" >> /etc/apt/sources.list
 
-RUN apt-get update \
-    && apt-get install -y locales wget cron git python3-pip \
-    && locale-gen zh_CN.UTF-8
-    # && apt-get clean
-    # && rm -rf /var/lib/apt/lists/*
+RUN apt-get update
+RUN apt-get install -y locales wget cron git python3-pip \
+    && locale-gen zh_CN.UTF-8 \
+    && rm -rf /var/lib/apt/lists/*
 
 # Add crontab file in the cron directory
 ADD crontab /etc/cron.d/crontab
