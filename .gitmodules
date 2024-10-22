@@ -19,3 +19,6 @@
 [submodule "openmetadata"]
 	path = openmetadata
 	url = git@github.com:longfengpili/openmetadata.git
+[submodule "webhook"]
+	path = webhook
+	url = git@github.com:longfengpili/webhook.git
