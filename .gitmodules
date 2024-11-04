@@ -22,3 +22,6 @@
 [submodule "webhook"]
 	path = webhook
 	url = git@github.com:longfengpili/webhook.git
+[submodule "myubuntu"]
+	path = myubuntu
+	url = git@github.com:longfengpili/myubuntu.git
