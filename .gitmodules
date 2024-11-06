@@ -25,3 +25,6 @@
 [submodule "myubuntu38"]
 	path = myubuntu38
 	url = git@github.com:longfengpili/myubuntu38.git
+[submodule "myubuntu"]
+	path = myubuntu
+	url = git@github.com:longfengpili/myubuntu.git
