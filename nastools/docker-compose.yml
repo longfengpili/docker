@@ -1,7 +1,7 @@
 version: '3.2'
 
 services:
-  nastools:
+  nastool:
     image: nastool/nas-tools:3.2.3
     restart: always
     mem_limit: 4G
@@ -13,7 +13,7 @@ services:
       - 9090:3000
     volumes:
       - type: bind
-        source: /volume1/docker/nastools/nastool/config
+        source: ./nastool/nastool/config
         target: /config
       - type: bind
         source: /volume1/video
@@ -39,10 +39,10 @@ services:
       - 51413:51413/udp  # Transmission 使用的默认种子端口（UDP）
     volumes:
       - type: bind
-        source: /volume1/docker/nastools/transmission/config
+        source: ./nastool/transmission/config
         target: /config
       - type: bind
-        source: /volume1/docker/nastools/transmission/watch
+        source: ./nastool/transmission/watch
         target: /watch
       - type: bind
         source: /volume1/video
@@ -65,8 +65,8 @@ services:
       - 6881:6881/udp
     volumes:
       - type: bind
-        source: /volume1/docker/nastools/qBittorrent
-        target: /etc/qBittorrent
+        source: ./nastool/qbittorrent
+        target: /config
       - type: bind
         source: /volume1/video
         target: /downloads
@@ -85,10 +85,10 @@ services:
       - 9092:8096
     volumes:
       - type: bind
-        source: /volume1/docker/nastools/jellyfin/cache
+        source: ./nastool/jellyfin/cache
         target: /cache
       - type: bind
-        source: /volume1/docker/nastools/jellyfin/config
+        source: ./nastool/jellyfin/config
         target: /config
       - type: bind
         source: /volume1/video
