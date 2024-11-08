@@ -49,6 +49,29 @@ services:
         target: /downloads
     network_mode: bridge
 
+  qbittorrent:
+    image: linuxserver/qbittorrent
+    container_name: qbittorrent
+    restart: always
+    environment:
+      - PUID=0
+      - PGID=0
+      - TZ=Asia/Shanghai
+      - WEBUI_PORT=8080
+      - TORRENTING_PORT=6881
+    ports:
+      - 18080:8080
+      - 6881:6881
+      - 6881:6881/udp
+    volumes:
+      - type: bind
+        source: /volume1/docker/nastools/qBittorrent
+        target: /etc/qBittorrent
+      - type: bind
+        source: /volume1/video
+        target: /downloads
+    network_mode: bridge
+
   jellyfin:
     image: jellyfin/jellyfin:20231009.14-unstable
     restart: always
