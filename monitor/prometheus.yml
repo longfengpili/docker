@@ -1,0 +1,36 @@
+# 我的全局配置
+global:
+  scrape_interval: 15s # 设置抓取间隔为每15秒。默认是每1分钟。
+  evaluation_interval: 15s # 每15秒评估一次规则。默认是每1分钟。
+
+# Alertmanager 配置
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+          # - alertmanager:9093
+
+# 加载规则文件并根据全局 'evaluation_interval' 定期评估它们。
+rule_files:
+  # - "first_rules.yml"
+  # - "second_rules.yml"
+
+# 包含一个要抓取端点的抓取配置：
+# 这里是 Prometheus 自己。
+scrape_configs:
+  # 工作名称作为标签 `job=<job_name>` 被添加到从此配置抓取的任何时间序列中。
+  - job_name: "prometheus"
+
+    # metrics_path 默认为 '/metrics'
+    # scheme 默认为 'http'。
+
+    static_configs:
+      - targets: ["localhost:9090"]
+
+  - job_name: 'node2.156'
+    static_configs:
+      - targets: ['192.168.2.156:9100']
+
+  - job_name: 'trino'
+    static_configs:
+      - targets: ['192.168.2.154:3900']

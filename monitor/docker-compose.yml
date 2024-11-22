@@ -1,0 +1,44 @@
+services:
+  prometheus:
+    image: prom/prometheus:latest
+    restart: always
+    environment:
+      - TZ=Asia/Shanghai
+    expose:
+      - 9090
+    ports:
+      - 29090:9090
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus-data:/prometheus
+
+  grafana:
+    image: grafana/grafana-enterprise:10.2.3-ubuntu
+    container_name: grafana
+    restart: always
+    ports:
+      - '3000:3000'
+    volumes:
+      - storage:/var/lib/grafana
+      - config:/usr/share/grafana
+
+
+volumes:
+  prometheus-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./data  
+  storage:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./volumes/storage
+  config:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./volumes/config
