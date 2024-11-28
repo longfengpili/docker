@@ -15,6 +15,12 @@ rule_files:
   # - "first_rules.yml"
   # - "second_rules.yml"
 
+
+# 通过环境变量或服务启动脚本
+extra_args:
+  - '--storage.tsdb.retention.time=30d'
+
+
 # 包含一个要抓取端点的抓取配置：
 # 这里是 Prometheus 自己。
 scrape_configs:
@@ -31,6 +37,15 @@ scrape_configs:
     static_configs:
       - targets: ['192.168.2.156:9100']
 
-  - job_name: 'trino'
+  - job_name: 'strino'
     static_configs:
       - targets: ['192.168.2.154:3900']
+        labels: 
+          env: sandbox
+
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: instance
+        replacement: 'gzcloud11(154)'
+        action: replace
+        regex: '192.168.2.154:3900'  # 仅在匹配时重命名
