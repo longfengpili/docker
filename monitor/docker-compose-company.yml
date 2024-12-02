@@ -12,7 +12,7 @@ services:
     ports:
       - 29090:9090
     volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prometheus-company.yml:/etc/prometheus/prometheus.yml
       - prometheus-data:/prometheus
 
   grafana:
