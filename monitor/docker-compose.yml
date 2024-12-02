@@ -3,7 +3,7 @@ services:
     image: prom/prometheus:latest
     restart: always
     command:
-      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--config.file=/etc/prometheus/prometheus-company.yml'
       - '--storage.tsdb.retention.time=30d'
     environment:
       - TZ=Asia/Shanghai
