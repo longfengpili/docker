@@ -28,3 +28,6 @@
 [submodule "smonitor"]
 	path = smonitor
 	url = git@github.com:longfengpili/smonitor.git
+[submodule "playedu"]
+	path = playedu
+	url = git@github.com:longfengpili/playedu.git
