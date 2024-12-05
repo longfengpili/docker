@@ -31,3 +31,6 @@
 [submodule "playedu"]
 	path = playedu
 	url = git@github.com:longfengpili/playedu.git
+[submodule "aipan"]
+	path = aipan
+	url = git@github.com:longfengpili/aipan.git
