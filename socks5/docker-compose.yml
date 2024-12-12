@@ -1,0 +1,12 @@
+services:
+  socks5:
+    image: serjs/go-socks5-proxy:latest
+    container_name: socks5
+    restart: always
+    environment:
+      - PROXY_USER=${PROXY_USER:-username}
+      - PROXY_PASSWORD=${PROXY_PASSWORD:-password}
+      - HTTP_PROXY=http://longfengpili:6666
+      - HTTPS_PROXY=https://longfengpili:6666
+    ports:
+      - 21080:1080
