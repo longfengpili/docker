@@ -34,3 +34,6 @@
 [submodule "aipan"]
 	path = aipan
 	url = git@github.com:longfengpili/aipan.git
+[submodule "kuboard"]
+	path = kuboard
+	url = git@github.com:longfengpili/kuboard.git
