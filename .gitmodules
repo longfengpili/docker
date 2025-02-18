@@ -16,9 +16,6 @@
 [submodule "grocy"]
 	path = grocy
 	url = git@github.com:longfengpili/grocy.git
-[submodule "openmetadata"]
-	path = openmetadata
-	url = git@github.com:longfengpili/openmetadata.git
 [submodule "webhook"]
 	path = webhook
 	url = git@github.com:longfengpili/webhook.git
@@ -37,3 +34,6 @@
 [submodule "kuboard"]
 	path = kuboard
 	url = git@github.com:longfengpili/kuboard.git
+[submodule "myopenmetadata"]
+	path = myopenmetadata
+	url = git@github.com:longfengpili/myopenmetadata.git
