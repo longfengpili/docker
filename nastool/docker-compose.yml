@@ -29,8 +29,8 @@ services:
       - PGID=0
       - TZ=Asia/Shanghai
       - TRANSMISSION_WEB_HOME=/config/webui
-      - USER=longfengpili #optional
-      - PASS=xxxxxxx #optional
+      - USER=xxxx #optional
+      - PASS=xxxxx #optional
     expose:
       - 9091
     ports:
@@ -99,3 +99,30 @@ services:
         source: /volume1/video
         target: /media
     network_mode: bridge
+
+  stash:
+    image: stashapp/stash:latest
+    container_name: stash
+    restart: always
+    network_mode: bridge
+    ports:
+      - "39999:9999"
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "10"
+        max-size: "2m"
+    environment:
+      - STASH_STASH=/data/
+      - STASH_GENERATED=/generated/
+      - STASH_METADATA=/metadata/
+      - STASH_CACHE=/cache/
+      - STASH_PORT=9999
+    volumes:
+      - /volume1/video:/data
+      - /etc/localtime:/etc/localtime:ro
+      - ./stash/config:/root/.stash
+      - ./stash/metadata:/metadata
+      - ./stash/cache:/cache
+      - ./stash/blobs:/blobs
+      - ./stash/generated:/generated
