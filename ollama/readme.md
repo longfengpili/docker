@@ -124,7 +124,7 @@ curl http://localhost:11434/api/chat -d '{
 ## 社区与支持
 
 - **GitHub**: [github.com/ollama/ollama](https://github.com/ollama/ollama)
-- **文档**: [ollama.com/docs](https://ollama.com/docs)
+- **文档**: [docs](https://github.com/datawhalechina/handy-ollama/tree/main/docs)
 - **模型库**: [ollama.com/library](https://ollama.com/library)
 
 ---
