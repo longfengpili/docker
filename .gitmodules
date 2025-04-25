@@ -37,3 +37,6 @@
 [submodule "myopenmetadata"]
 	path = myopenmetadata
 	url = git@github.com:longfengpili/myopenmetadata.git
+[submodule "myollama"]
+	path = myollama
+	url = git@github.com:longfengpili/myollama.git
