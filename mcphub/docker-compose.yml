@@ -1,0 +1,7 @@
+services:
+  mcphub:
+    image: samanhappy/mcphub:latest-full
+    container_name: mcphub
+    restart: unless-stopped
+    ports:
+      - 3535:3000
