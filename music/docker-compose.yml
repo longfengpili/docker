@@ -1,0 +1,86 @@
+services:
+  # 1. 音乐下载：simple_sq_music_plus
+  sqmusic_main:
+    image: registry.cn-hangzhou.aliyuncs.com/sqdockler/simple_sq_music_plus:latest
+    container_name: sqmusic_main
+    environment:
+      - DB_IP=xxxxxxx.cn
+      - DB_PORT=3306
+      - DB_NAME=music
+      - DB_USERNAME=music
+      - DB_PASSWORD=xxxxxxxx
+    volumes:
+      - /volume1/music:/music
+    networks:
+      - music_network
+    expose:
+      - "8099"
+    restart: always
+
+  sqmusic_web:
+    image: registry.cn-hangzhou.aliyuncs.com/sqdockler/simple_sq_music_plus_web:latest
+    container_name: sqmusic_web
+    ports:
+      - "8096:80"
+    networks:
+      - music_network
+    depends_on:
+      - sqmusic_main
+    restart: always
+
+
+  navidrome:
+    image: deluan/navidrome:latest
+    container_name: navidrome
+    user: 0:0 #用户id
+    ports:
+      - 4533:4533 #左侧端口如有冲突，可随意修改
+    volumes:
+      - /volume1/docker/music/navidrome:/data #数据路径
+      - /volume1/music:/music:ro #音乐路径
+    environment:
+      #程序默认语言
+      - ND_DEFAULTLANGUAGE=zh-Hans
+      #启用GRAVATAR头像
+      - ND_ENABLEGRAVATAR=true
+      #关闭转码，如需要转码请设置为true
+      - ND_ENABLETRANSCODINGCONFIG=false
+      #SPOTIFY相关
+      # - ND_SPOTIFY_ID=
+      # - ND_SPOTIFY_SECRET=
+      #LAST.FM相关
+      # - ND_LASTFM_LANGUAGE=zh
+      # - ND_LASTFM_APIKEY=
+      # - ND_LASTFM_SECRET=
+      #PROXY相关
+      # - HTTP_PROXY=http://proxy:port
+      # - HTTPS_PROXY=http://proxy:port
+    restart: always
+    networks:
+      - music_network
+
+  music-tag:
+    image: xhongc/music_tag_web:latest
+    container_name: music-tag-web
+    # network_mode: host
+    ports:
+      - 8002:8002
+    volumes:
+      - /volume1/music:/app/media:rw
+      - /volume1/docker/music/tag:/app/data
+    environment:
+      - PUID=0
+      - PGID=0
+      # - MYSQL_HOST=localhost # mysql 局域网ip地址（没有可以不填，默认使用 sqlite）
+      # - MYSQL_PASSWORD=123456789abc # mysql密码（没有可以不填，默认使用 sqlite）
+      # - MYSQL_DB_NAME=music # 数据表名称（没有可以不填，默认使用 sqlite）
+      # - MYSQL_USER=root # mysql 用户名（默认使用 root）
+      # - MYSQL_PORT=3306 # mysql 端口（默认使用 3306）
+      - WORKER_NUM=8 #  后台并发执行任务的worker数量# - WORKER_NUM=8 #  后台并发执行任务的worker数量
+    restart: always
+    networks:
+      - music_network
+
+networks:
+  music_network:
+    driver: bridge
